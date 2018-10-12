@@ -38,6 +38,19 @@ $(function(){
         // $("#canvas").on("click",function(){
 
         // })
+        $("#canvas").mousemove(function(event) {
+            var mousetracker = {
+                x : event.pageX,
+                y : event.pageY
+            }
+            console.log(mousetracker);            
+        });
     }
     mainMenu();
+
+
+
+
+
+
 });

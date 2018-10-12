@@ -27,7 +27,13 @@ $(function(){
         ctx.fillStyle = '#dadadb';
         // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
         ctx.fillRect(startButton.x,startButton.y,startButton.width,startButton.height);
-        
+
+        // On mets la couleur noire à notre font sinon ça va être de la même couleur que notre rectangle
+        ctx.fillStyle = '#000000';
+        ctx.font = '20px Arial';        
+        // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
+        ctx.fillText('Commencer', startButton.x+45, startButton.y+30);
+
         // // Pour la suite afin de détecter si le rectangle a été cliqué
         // $("#canvas").on("click",function(){
 

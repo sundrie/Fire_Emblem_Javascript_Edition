@@ -22,9 +22,11 @@ $(function(){
             width:200,
             height:50
         }
-        
-        // Dessine un rectangle
-        ctx.strokeRect(startButton.x,startButton.y,startButton.width,startButton.height);
+
+        // Ajoute de la couleur à notre rectangle
+        ctx.fillStyle = '#dadadb';
+        // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
+        ctx.fillRect(startButton.x,startButton.y,startButton.width,startButton.height);
         
         // // Pour la suite afin de détecter si le rectangle a été cliqué
         // $("#canvas").on("click",function(){

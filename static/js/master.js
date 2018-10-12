@@ -38,13 +38,21 @@ $(function(){
         // $("#canvas").on("click",function(){
 
         // })
+
+        // mousemove nous renvoie la position de la souris uniquement quand elle est sur le canvas
         $("#canvas").mousemove(function(event) {
+            // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
+            var canvassize = canvas.getBoundingClientRect();
             var mousetracker = {
-                x : event.pageX,
-                y : event.pageY
+                x : event.clientX - canvassize.left,
+                y : event.clientY - canvassize.top
             }
-            console.log(mousetracker);            
+            if (mousetracker.x > startButton.x && mousetracker.x < startButton.x + startButton.width && mousetracker.y > startButton.y && mousetracker.y < startButton.y + startButton.height){
+                console.log(mousetracker);
+                console.log('survol !');                  
+            }        
         });
+        
     }
     mainMenu();
 

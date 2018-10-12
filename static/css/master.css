@@ -10,9 +10,3 @@ html{
     flex-direction: column;
     align-items: center;
 }
-
-.canvas {    
-    background-color: #6c6dc4;
-    width: 800px;
-    height: 480px;
-}

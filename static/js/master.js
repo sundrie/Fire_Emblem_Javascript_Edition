@@ -8,6 +8,20 @@ $(function(){
     var ctx = canvas.getContext("2d");
 	var cwidth = $("#canvas").width();
     var cheight = $("#canvas").height();
+    // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
+    var canvassize = canvas.getBoundingClientRect();
+    var mousetracker;
+    
+        
+    // méthode pour suivre les déplacements de la souris
+    function mouseTracking (mousetracker,target) {
+        // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  
+        if (mousetracker.x > target.x && mousetracker.x < target.x + target.width && mousetracker.y > target.y && mousetracker.y < target.y + target.height){
+            return true;
+        } else {
+            return false;
+        }            
+    }
 
     
     // Constructeur de notre objet bouton qui permets de faire de multiples boutons
@@ -51,29 +65,40 @@ $(function(){
         // On créé une un nouveau bouton en utilisant le constructeur que j'ai fais
         var startingButton = new Button(320, 270, 200, 50,"20px Arial","Commencer");
         // On utilise la méthode pour le générer
-        startingButton.drawButton("#dadadb","#000000");
-
-        // // Pour la suite afin de détecter si le rectangle a été cliqué
-        // $("#canvas").on("click",function(){
-        
-        // })
+        startingButton.drawButton("#dadadb","#000000");        
 
         // mousemove nous renvoie la position de la souris uniquement quand elle est sur le canvas
-        $("#canvas").mousemove(function(event) {
-            // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
-            var canvassize = canvas.getBoundingClientRect();
-            var mousetracker = {
-                x : event.clientX - canvassize.left,
-                y : event.clientY - canvassize.top
+        $("#canvas").mousemove(function(e) {
+            mousetracker = {
+                x : e.clientX - canvassize.left,
+                y : e.clientY - canvassize.top
             }
-            if (mousetracker.x > startingButton.x && mousetracker.x < startingButton.x + startingButton.width && mousetracker.y > startingButton.y && mousetracker.y < startingButton.y + startingButton.height){
-                // On appelle la méthode de notre objet pour changer son apparence
+            // on appelle notre fonction qui permets de savoir si la souris touche notre zone cible
+            var hit = mouseTracking(mousetracker,startingButton); 
+            // Si la fonction nous renvoie true ça veut dire que la souris est dans la zone           
+            if (hit) {
+                // On appelle la méthode de notre objet pour changer l'apparence du bouton
                 startingButton.changeButtonColor("#8c8c8c","#000000");
             } else {
                 // Dès que la souris sort on utilise à nouveau notre méthode en remettant aux valeurs de base
                 startingButton.changeButtonColor("#dadadb","#000000");
-            }     
+            }
+
         });
+        
+        $("#canvas").on("click",function(e){
+            mousetracker = {
+                x : e.clientX - canvassize.left,
+                y : e.clientY - canvassize.top
+            }
+            // on appelle notre fonction qui permets de savoir si la souris touche notre zone cible
+            var hit = mouseTracking(mousetracker,startingButton); 
+            // Si la fonction nous renvoie true ça veut dire que la souris est dans la zone           
+            if (hit) {
+                // On appelle la méthode de notre objet pour changer l'apparence du bouton
+                startingButton.changeButtonColor("red","red");
+            }
+        })
          
     }
     mainMenu();

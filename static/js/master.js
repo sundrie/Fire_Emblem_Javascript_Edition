@@ -11,20 +11,18 @@ $(function(){
 
     
     // Constructeur de notre objet bouton qui permets de faire de multiples boutons
-    function Button(x, y, width, height,bcolor,tcolor,tfont,text) {
+    function Button(x, y, width, height, tfont, text) {
         this.x = x; 
         this.y = y;
         this.width = width;
         this.height = height;
-        this.bcolor = bcolor;
-        this.tcolor = tcolor;
         this.tfont = tfont;
-        this.text = text;
+        this.text = text;        
 
         // méthode pour modéliser le bouton
-        this.drawButton = function() {            
+        this.drawButton = function(bcolor,tcolor) {            
             // Ajoute de la couleur à notre rectangle
-            ctx.fillStyle = this.bcolor;
+            ctx.fillStyle = bcolor;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
             ctx.fillRect(this.x,this.y,this.width,this.height);
             
@@ -32,7 +30,14 @@ $(function(){
             ctx.fillStyle = tcolor;
             ctx.font = tfont;        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
-            ctx.fillText(text, this.x+45, this.y+30);
+            ctx.fillText(this.text, this.x+45, this.y+33);
+        }
+
+        // Permets de changer la couleur et le texte du bouton pour par exemple faire un effet hover sur le bouton (le bouton est supprimé puis recréé avec de nouvelles couleurs saisies)
+        this.changeButtonColor = function(newbcolor,newtcolor){
+            // clearRect() efface le rectangle il suffit d'indiquer les coordonnées qu'on avait rentrée pour créer le rectangle que l'on souhaite maintenant supprimer
+            ctx.clearRect(this.x,this.y,this.width,this.height);
+            this.drawButton(newbcolor,newtcolor);
         }
     } 
     
@@ -44,9 +49,9 @@ $(function(){
         ctx.fillText('Javascript Edition',430,230);         
         
         // On créé une un nouveau bouton en utilisant le constructeur que j'ai fais
-        var startingButton = new Button(320, 270, 200, 50,"#dadadb","#000000","20px Arial","Commencer");
+        var startingButton = new Button(320, 270, 200, 50,"20px Arial","Commencer");
         // On utilise la méthode pour le générer
-        startingButton.drawButton();
+        startingButton.drawButton("#dadadb","#000000");
 
         // // Pour la suite afin de détecter si le rectangle a été cliqué
         // $("#canvas").on("click",function(){
@@ -61,21 +66,15 @@ $(function(){
                 x : event.clientX - canvassize.left,
                 y : event.clientY - canvassize.top
             }
-            if (mousetracker.x > startButton.x && mousetracker.x < startButton.x + startButton.width && mousetracker.y > startButton.y && mousetracker.y < startButton.y + startButton.height){
-                //console.log(mousetracker);
-                console.log('survol !');
-                // clearRect() efface le rectangle il suffit d'indiquer les coordonnées qu'on avait rentrée pour créer le rectangle que l'on souhaite maintenant supprimer
-                // ctx.clearRect(startButton.x,startButton.y,startButton.width,startButton.height);
-                // startButton.drawRect();
-                // console.log(startButton.color);
-                // startButton.color="blue"
-                // console.log(startButton.color);
-                
+            if (mousetracker.x > startingButton.x && mousetracker.x < startingButton.x + startingButton.width && mousetracker.y > startingButton.y && mousetracker.y < startingButton.y + startingButton.height){
+                // On appelle la méthode de notre objet pour changer son apparence
+                startingButton.changeButtonColor("#8c8c8c","#000000");
             } else {
-                // startButton.drawRect();
-            }        
+                // Dès que la souris sort on utilise à nouveau notre méthode en remettant aux valeurs de base
+                startingButton.changeButtonColor("#dadadb","#000000");
+            }     
         });
-        
+         
     }
     mainMenu();
 

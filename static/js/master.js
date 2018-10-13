@@ -56,7 +56,15 @@ $(function(){
     } 
     
     function mainMenu(){
+
+        var background = new Image();
+        background.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg";
+        // Le onload est obligatoire pour charger l'image
+        background.onload = function(){
+            ctx.drawImage(background,0,0,cwidth,cheight);   
+        }
         
+        ctx.fillStyle="#000000";
         ctx.font = '60px Arial';
         ctx.fillText('Fire Emblem', 250, 200);
         ctx.font = 'italic 20px Arial';
@@ -95,12 +103,16 @@ $(function(){
             var hit = mouseTracking(mousetracker,startingButton); 
             // Si la fonction nous renvoie true ça veut dire que la souris est dans la zone           
             if (hit) {
-                // On appelle la méthode de notre objet pour changer l'apparence du bouton
-                startingButton.changeButtonColor("red","red");
+                titleScreen();
             }
         })
          
     }
     mainMenu();
+
+    function titleScreen() {
+        console.log("Ecran de début");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
 });

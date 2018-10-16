@@ -10,9 +10,9 @@ $(function(){
     var cheight = $("#canvas").height();
     // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
     var canvassize = canvas.getBoundingClientRect();
-    var mousetracker;
+    var mousetracker;   
     
-        
+    
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
         // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  
@@ -23,7 +23,6 @@ $(function(){
         }            
     }
 
-    
     // Constructeur de notre objet bouton qui permets de faire de multiples boutons
     function Button(x, y, width, height, tfont, text) {
         this.x = x; 
@@ -54,6 +53,30 @@ $(function(){
             this.drawButton(newbcolor,newtcolor);
         }
     } 
+
+    function Character(posx,posy) {
+        // posx et posy permettes de déterminer où se trouve le personnage
+        this.posx = posx;
+        this.posy = posy;
+
+        // On fixe le personnage aux coordonnées indiquées lors de sa création
+        this.create = function() { 
+            ctx.fillStyle = "blue";
+            ctx.fillRect(this.posx,this.posy,20,20);
+        }
+        // Ceci va permettre de modifier la position du personnage 
+        this.move = function(direction){
+            if (direction === "ArrowRight") {
+                ctx.clearRect(this.posx, this.posy, 20, 20);
+                ctx.fillStyle = "blue";
+                
+                console.log(this.posx);
+                this.posx += 20;
+                console.log(this.posx);  
+                ctx.fillRect(this.posx,this.posy,20,20);                     
+            }
+        }
+    }
     
     function mainMenu(){
         
@@ -73,14 +96,13 @@ $(function(){
         ctx.font = '30px Arial';
         ctx.fillText('Appuyez sur la touche Entrée pour commencer', 100, 400);         
     }
-    mainMenu();
+    mainMenu();    
 
-    // Permets de détecter les touches du clavier
-    $(document).keypress(function(e) {
-        console.log(e.key);
+    // Lorsque la touche Entrée est pressée on peut passer au jeu
+    $(document).keypress(function(e){
         if(e.key === "Enter"){
             gameScreen();
-        }        
+        }
     });
 
     // L'affichage du jeu
@@ -104,5 +126,14 @@ $(function(){
             ctx.stroke();                     
         }
         
+
+        var Chrom = new Character(0,0);
+        // Ceci va créer notre personnage (définir sa place dans la grille)
+        Chrom.create();
+
+        // Permets de détecter les touches du clavier
+        $(document).keypress(function(e){         
+            Chrom.move(e.key);             
+        });
     }
 });

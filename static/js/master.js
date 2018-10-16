@@ -56,63 +56,37 @@ $(function(){
     } 
     
     function mainMenu(){
-
-        var background = new Image();
-        background.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg";
-        // Le onload est obligatoire pour charger l'image
-        background.onload = function(){
-            ctx.drawImage(background,0,0,cwidth,cheight);   
-        }
+        
+        // var background = new Image();
+        // background.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg";
+        // // Le onload est obligatoire pour charger l'image
+        // background.onload = function(){
+        //     ctx.drawImage(background,0,0,cwidth,cheight);   
+        // }
         
         ctx.fillStyle="#000000";
         ctx.font = '60px Arial';
         ctx.fillText('Fire Emblem', 250, 200);
         ctx.font = 'italic 20px Arial';
         ctx.fillText('Javascript Edition',430,230);         
-        
-        // On créé une un nouveau bouton en utilisant le constructeur que j'ai fais
-        var startingButton = new Button(320, 270, 200, 50,"20px Arial","Commencer");
-        // On utilise la méthode pour le générer
-        startingButton.drawButton("#dadadb","#000000");        
-
-        // mousemove nous renvoie la position de la souris uniquement quand elle est sur le canvas
-        $("#canvas").mousemove(function(e) {
-            mousetracker = {
-                x : e.clientX - canvassize.left,
-                y : e.clientY - canvassize.top
-            }
-            // on appelle notre fonction qui permets de savoir si la souris touche notre zone cible
-            var hit = mouseTracking(mousetracker,startingButton); 
-            // Si la fonction nous renvoie true ça veut dire que la souris est dans la zone           
-            if (hit) {
-                // On appelle la méthode de notre objet pour changer l'apparence du bouton
-                startingButton.changeButtonColor("#8c8c8c","#000000");
-            } else {
-                // Dès que la souris sort on utilise à nouveau notre méthode en remettant aux valeurs de base
-                startingButton.changeButtonColor("#dadadb","#000000");
-            }
-
-        });
-        
-        $("#canvas").on("click",function(e){
-            mousetracker = {
-                x : e.clientX - canvassize.left,
-                y : e.clientY - canvassize.top
-            }
-            // on appelle notre fonction qui permets de savoir si la souris touche notre zone cible
-            var hit = mouseTracking(mousetracker,startingButton); 
-            // Si la fonction nous renvoie true ça veut dire que la souris est dans la zone           
-            if (hit) {
-                titleScreen();
-            }
-        })
-         
+        ctx.fillStyle="#000000";
+        ctx.font = '30px Arial';
+        ctx.fillText('Appuyez sur la touche Entrée pour commencer', 100, 400);         
     }
     mainMenu();
 
-    function titleScreen() {
-        console.log("Ecran de début");
+    // Permets de détecter les touches du clavier
+    $(document).keypress(function(e) {
+        console.log(e.key);
+        if(e.key === "Enter"){
+            titleScreen();
+        }        
+    });
+
+    function titleScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0,0,cwidth,cheight);
     }
 
 });

@@ -97,6 +97,12 @@ $(function(){
             ctx.lineTo(cwidth,i);
             ctx.stroke();                     
         }
+        for (i = 20; i < cwidth; i+=20) {
+            ctx.beginPath();
+            ctx.moveTo(i,0);
+            ctx.lineTo(i,cheight);
+            ctx.stroke();                     
+        }
         
     }
 });

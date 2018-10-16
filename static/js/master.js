@@ -126,24 +126,8 @@ $(function(){
     // L'affichage du jeu
     function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "white";
-        ctx.fillRect(0,0,cwidth,cheight);
-
-        // Va nous permettre de tracer notre grille
-        // += permets d'ajouter 20 au lieu de i++ qui fait +1 à chaque fois
-        for (i = 20; i < cheight; i+=20) {
-            ctx.beginPath();
-            ctx.moveTo(0,i);
-            ctx.lineTo(cwidth,i);
-            ctx.stroke();                     
-        }
-        for (i = 20; i < cwidth; i+=20) {
-            ctx.beginPath();
-            ctx.moveTo(i,0);
-            ctx.lineTo(i,cheight);
-            ctx.stroke();                     
-        }
-        
+        // Ceci permets d'éviter que le fond soit supprimé quand le personnage bouge. En effet mettre le fond en css fixe ce problème
+        $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/grid.png')");        
 
         var Chrom = new Character(0,0);
         // Ceci va créer notre personnage (définir sa place dans la grille)

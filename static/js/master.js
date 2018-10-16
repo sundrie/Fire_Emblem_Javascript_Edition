@@ -79,14 +79,24 @@ $(function(){
     $(document).keypress(function(e) {
         console.log(e.key);
         if(e.key === "Enter"){
-            titleScreen();
+            gameScreen();
         }        
     });
 
-    function titleScreen() {        
+    // L'affichage du jeu
+    function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
         ctx.fillRect(0,0,cwidth,cheight);
-    }
 
+        // Va nous permettre de tracer notre grille
+        // += permets d'ajouter 20 au lieu de i++ qui fait +1 à chaque fois
+        for (i = 20; i < cheight; i+=20) {
+            ctx.beginPath();
+            ctx.moveTo(0,i);
+            ctx.lineTo(cwidth,i);
+            ctx.stroke();                     
+        }
+        
+    }
 });

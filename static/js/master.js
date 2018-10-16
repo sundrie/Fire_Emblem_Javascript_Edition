@@ -98,13 +98,8 @@ $(function(){
     
     function mainMenu(){
         
-        // var background = new Image();
-        // background.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg";
-        // // Le onload est obligatoire pour charger l'image
-        // background.onload = function(){
-        //     ctx.drawImage(background,0,0,cwidth,cheight);   
-        // }
-        
+        $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg')");   
+        $(".canvas").css("background-size","cover");
         ctx.fillStyle="#000000";
         ctx.font = '60px Arial';
         ctx.fillText('Fire Emblem', 250, 200);

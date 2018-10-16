@@ -67,13 +67,22 @@ $(function(){
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){
             if (direction === "ArrowRight") {
-                ctx.clearRect(this.posx, this.posy, 20, 20);
+                // On supprime la précédente position du personnage
+                ctx.clearRect(this.posx, this.posy, 20, 20);                
                 ctx.fillStyle = "blue";
-                
-                console.log(this.posx);
-                this.posx += 20;
-                console.log(this.posx);  
+                // Ici on ajoute +20 à la position de l'objet ce qui fait que sa précédente position sera écrasée par celle ci
+                this.posx += 20; 
+                // Et on le recrée aux nouvelles positions les 2 20 sont juste la largeur et hauteur du personnage étant donné que chaque personnage occupe une case ceci sera en fonction de la taille des cases 
                 ctx.fillRect(this.posx,this.posy,20,20);                     
+            }
+            if (direction === "ArrowLeft") {
+                // On supprime la précédente position du personnage
+                ctx.clearRect(this.posx, this.posy, 20, 20);                
+                ctx.fillStyle = "blue";
+                // Ici on ajoute +20 à la position de l'objet ce qui fait que sa précédente position sera écrasée par celle ci
+                this.posx -= 20; 
+                // Et on le recrée aux nouvelles positions les 2 20 sont juste la largeur et hauteur du personnage étant donné que chaque personnage occupe une case ceci sera en fonction de la taille des cases 
+                ctx.fillRect(this.posx,this.posy,20,20);
             }
         }
     }

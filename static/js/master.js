@@ -54,6 +54,17 @@ $(function(){
         }
     } 
 
+    // Le curseur pour se déplacer sur la carte et manipuler les personnages
+    function Cursor(posx,posy){
+        this.posx = posx;
+        this.posy = posy;
+        // On fixe le curseur aux coordonnées indiquées lors de sa création
+        this.create = function() { 
+            ctx.fillStyle = "black";
+            ctx.strokeRect(this.posx,this.posy,20,20);
+        }
+    }
+
     function Character(posx,posy) {
         // posx et posy permettes de déterminer où se trouve le personnage
         this.posx = posx;
@@ -97,9 +108,10 @@ $(function(){
     }
     
     function mainMenu(){
-        
+        // Notre image en fond
         $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/background_FEA.jpg')");   
         $(".canvas").css("background-size","cover");
+
         ctx.fillStyle="#000000";
         ctx.font = '60px Arial';
         ctx.fillText('Fire Emblem', 250, 200);
@@ -122,15 +134,20 @@ $(function(){
     function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Ceci permets d'éviter que le fond soit supprimé quand le personnage bouge. En effet mettre le fond en css fixe ce problème
-        $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/grid.png')");        
+        $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/grid.png')");   
+        
+        // On créé notre curseur pour intéragir avec le jeu
+        var theCursor = new Cursor(420,240);
+        theCursor.create();
 
-        var Chrom = new Character(0,0);
+        
+        var chrom = new Character(0,0);
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        Chrom.create();
+        chrom.create();
 
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
-            Chrom.move(e.key);             
+            chrom.move(e.key);             
         });
     }
 });

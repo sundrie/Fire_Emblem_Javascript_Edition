@@ -12,37 +12,24 @@ $(function(){
     var canvassize = canvas.getBoundingClientRect();
     var mousetracker;   
 
-    // On récupère la position du 1er canvas pourdéterminer où les autres doivent se placer pour faire des layers. offset() renvoie la position top et left de l'élément 
+    // On récupère la position du 1er canvas pour déterminer où les autres doivent se placer pour faire des layers. offset() renvoie la position top et left de l'élément 
     var topPos = $("#canvas").offset().top;
     var leftPos = $("#canvas").offset().left;
 
-    // Cette fonction génère un canvas basé sur les mesures du premier canvas
-    // nomC est le nom que l'on souhaite pour notre canvas (de préférence son chiffre pour faire simplement les choses)
-    // nbLayer est le chiffre du canvas par rapport à sa création 
-    function generateCanvas(nomC,nbLayer){
-        $(".wrapper").append("<canvas id='"+nomC+"' class='"+nomC+"'></canvas>");
-        var canvas = $("#"+nomC+"")[0];
-        // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
-        canvas.setAttribute('width', cwidth);
-        canvas.setAttribute('height', cheight);
-        var ctx = canvas.getContext("2d");
-        var cwidth = $("#"+nomC+"").width();
-        var cheight = $("#"+nomC+"").height();
-        var canvassize = canvas.getBoundingClientRect();
-        $("."+nomC+"").css("position","absolute");
-        $("."+nomC+"").css("top",topPos);
-        $("."+nomC+"").css("left",leftPos);
-        return [canvas,ctx,cwidth,cheight,canvassize];
-    }
 
     // création du second layer
-    var canvas2 = generateCanvas("canvas2",2);
-    
-    console.log(canvas2);
-    
-    
-
-    
+    $(".wrapper").append("<canvas id='canvas2' class='canvas2'></canvas>");
+    var canvas2 = $("#canvas2")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas2.setAttribute('width', cwidth);
+    canvas2.setAttribute('height', cheight);
+    var ctx2 = canvas2.getContext("2d");
+	var cwidth2 = $("#canvas2").width();
+    var cheight2 = $("#canvas2").height();
+    var canvassize2 = canvas2.getBoundingClientRect();
+    $(".canvas2").css("position","absolute");
+    $(".canvas2").css("top",topPos);
+    $(".canvas2").css("left",leftPos);
     
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
@@ -104,12 +91,22 @@ $(function(){
             ctx2.fillStyle = "purple";
             // Le switch permets de modifier la position en fonction de la touche pressée on ecrase la valeur de x ou y de notre objet en faisant +20 ou -20 sur la précédente valeur de x
             switch (what) {
-                case "+x":                                
-                    this.posx += 20;                   
+                case "+x":
+                    // Ceci sert à ne pas dépasser notre zone de jeu tant que le x n'a pas atteint le max width et bien on peut ajouter +20 à notre x 
+                    if (this.posx < cwidth2-20) {                                
+                        this.posx += 20;                 
+                        break;             
+                    } else {     
+                        // Si on est à la limite de la zone et bien on redessine au même endroit l'image               
+                        break;
+                    }
+                case "-x":
+                if (this.posx > 0) {                
+                    this.posx -= 20;                  
                     break;
-                case "-x":                
-                    this.posx -= 20;                   
+                } else {             
                     break;
+                }
                 case "-y":                
                     this.posy -= 20;                
                     break;

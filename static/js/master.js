@@ -18,6 +18,7 @@ $(function(){
 
 
     // création du second layer
+    $(".wrapper").append("<canvas id='canvas2' class='canvas2'></canvas>");
     var canvas2 = $("#canvas2")[0];
     canvas2.setAttribute('width', 840);
     canvas2.setAttribute('height', 480);
@@ -130,13 +131,10 @@ $(function(){
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
         this.create = function(imgChara) { 
-            // ctx.fillStyle = "blue";
-            // ctx.fillRect(this.posx,this.posy,20,20);
             imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/chrom.png";
             imgChara.onload = function(){
-                ctx2.drawImage(imgChara,0,0);
+                ctx.drawImage(imgChara,0,0);
             }
-
         }        
     }
     

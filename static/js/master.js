@@ -10,6 +10,9 @@ $(function(){
     var cheight = $("#canvas").height();
     // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
     var canvassize = canvas.getBoundingClientRect();
+    // C'est la taille des cases de notre grille vu que c'est carré et bien pas besoin de faire pour x et y
+    var tilesize = 20;
+
     var mousetracker;   
 
     // On récupère la position du 1er canvas pour déterminer où les autres doivent se placer pour faire des layers. offset() renvoie la position top et left de l'élément 
@@ -87,14 +90,14 @@ $(function(){
         }
         // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
         this.regenerate = function(what){
-            ctx2.clearRect(this.posx, this.posy, 20, 20);
+            ctx2.clearRect(this.posx, this.posy, tilesize, tilesize);
             ctx2.fillStyle = "purple";
             // Le switch permets de modifier la position en fonction de la touche pressée on ecrase la valeur de x ou y de notre objet en faisant +20 ou -20 sur la précédente valeur de x
             switch (what) {
                 case "+x":
                     // Ceci sert à ne pas dépasser notre zone de jeu tant que le x n'a pas atteint le max width et bien on peut ajouter +20 à notre x 
-                    if (this.posx < cwidth2-20) {                                
-                        this.posx += 20;                 
+                    if (this.posx < cwidth2-tilesize) {                                
+                        this.posx += tilesize;                 
                         break;             
                     } else {     
                         // Si on est à la limite de la zone et bien on redessine au même endroit l'image               
@@ -102,21 +105,21 @@ $(function(){
                     }
                 case "-x":
                     if (this.posx > 0) {                
-                        this.posx -= 20;                  
+                        this.posx -= tilesize;                  
                         break;
                     } else {             
                         break;
                     }
                 case "-y":
                     if (this.posy > 0) {                 
-                        this.posy -= 20;                
+                        this.posy -= tilesize;                
                         break;
                     } else {
                         break;
                     }
                 case "+y":
-                    if (this.posy < cheight2-20) {                
-                        this.posy += 20;                                       
+                    if (this.posy < cheight2-tilesize) {                
+                        this.posy += tilesize;                                       
                         break;
                     } else {
                         break;

@@ -72,15 +72,18 @@ $(function(){
         }
     } 
 
+    // Pour pouvoir accéder au curseur n'importe où dans le code
+    var imgCursor = new Image();
     // Le curseur pour se déplacer sur la carte et manipuler les personnages
     function Cursor(posx,posy){
         this.posx = posx;
         this.posy = posy;
         // On fixe le curseur aux coordonnées indiquées lors de sa création
         this.create = function() { 
-            ctx2.fillStyle = "purple";
-            // ctx.lineWidth=3;
-            ctx2.fillRect(this.posx,this.posy,20,20);
+            imgCursor.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/cursor.png";
+            imgCursor.onload = function(){
+                ctx2.drawImage(imgCursor,420,240);
+            }            
         }
         // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
         this.regenerate = function(what){
@@ -101,7 +104,7 @@ $(function(){
                     this.posy += 20;                                       
                     break;
             }
-            ctx2.fillRect(this.posx,this.posy,20,20);            
+            ctx2.drawImage(imgCursor,this.posx,this.posy);          
         }
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){

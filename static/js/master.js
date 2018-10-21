@@ -129,9 +129,14 @@ $(function(){
         this.posy = posy;
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
-        this.create = function() { 
-            ctx.fillStyle = "blue";
-            ctx.fillRect(this.posx,this.posy,20,20);
+        this.create = function(imgChara) { 
+            // ctx.fillStyle = "blue";
+            // ctx.fillRect(this.posx,this.posy,20,20);
+            imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/chrom.png";
+            imgChara.onload = function(){
+                ctx2.drawImage(imgChara,0,0);
+            }
+
         }        
     }
     
@@ -173,9 +178,8 @@ $(function(){
         });
 
         var chrom = new Character(0,0);
+        var imgChara = new Image();
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        chrom.create();
-
-        
+        chrom.create(imgChara);        
     }
 });

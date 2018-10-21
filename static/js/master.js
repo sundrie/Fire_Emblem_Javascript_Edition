@@ -60,46 +60,44 @@ $(function(){
         this.posy = posy;
         // On fixe le curseur aux coordonnées indiquées lors de sa création
         this.create = function() { 
-            ctx.fillStyle = "black";
-            ctx.lineWidth=3;
-            ctx.strokeRect(this.posx,this.posy,20,20);
+            ctx.fillStyle = "purple";
+            // ctx.lineWidth=3;
+            ctx.fillRect(this.posx,this.posy,20,20);
         }
         // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
-        this.regenerate = function(what,newpos){
+        this.regenerate = function(what){
             ctx.clearRect(this.posx, this.posy, 20, 20);
-            ctx.fillStyle = "black";
-            ctx.lineWidth=3;
+            ctx.fillStyle = "purple";
+            // Le switch permets de modifier la position en fonction de la touche pressée on ecrase la valeur de x ou y de notre objet en faisant +20 ou -20 sur la précédente valeur de x
             switch (what) {
-                case "+x":
-                    console.log("à droite !");                    
+                case "+x":                                
+                    this.posx += 20;                   
                     break;
-                case "-x":
-                    console.log("à gauche !");                    
+                case "-x":                
+                    this.posx -= 20;                   
                     break;
-                case "-y":
-                    console.log("en haut !");                    
+                case "-y":                
+                    this.posy -= 20;                
                     break;
-                case "+y":
-                    console.log("en bas !");                    
+                case "+y":                
+                    this.posy += 20;                                       
                     break;
             }
-            ctx.strokeRect(this.posx,this.posy,20,20);            
+            ctx.fillRect(this.posx,this.posy,20,20);            
         }
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){
             if (direction === "ArrowRight") {
-                // Ici on ajoute +20 à la position de l'objet ce qui fait que sa précédente position sera écrasée par celle ci
-                // Et on le recrée aux nouvelles positions les 2 20 sont juste la largeur et hauteur du personnage étant donné que chaque personnage occupe une case ceci sera en fonction de la taille des cases 
-                this.regenerate("+x",this.posx += 20);                     
+                this.regenerate("+x");                     
             }
-            if (direction === "ArrowLeft") {                
-                this.regenerate("-x",this.posx -= 20);
+            if (direction === "ArrowLeft") {          
+                this.regenerate("-x");
             }
             if (direction === "ArrowUp") {
-                this.regenerate("-y",this.posy -= 20);
+                this.regenerate("-y");
             }
             if (direction ==="ArrowDown") {
-                this.regenerate("+y",this.posy += 20);
+                this.regenerate("+y");
             }
         }
     }
@@ -113,8 +111,7 @@ $(function(){
         this.create = function() { 
             ctx.fillStyle = "blue";
             ctx.fillRect(this.posx,this.posy,20,20);
-        }
-        
+        }        
     }
     
     function mainMenu(){
@@ -149,15 +146,15 @@ $(function(){
         // On créé notre curseur pour intéragir avec le jeu
         var theCursor = new Cursor(420,240);
         theCursor.create();
-
+        // Permets de détecter les touches du clavier
+        $(document).keypress(function(e){         
+            theCursor.move(e.key);             
+        });
 
         var chrom = new Character(0,0);
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
 
-        // Permets de détecter les touches du clavier
-        $(document).keypress(function(e){         
-            theCursor.move(e.key);             
-        });
+        
     }
 });

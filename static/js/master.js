@@ -11,6 +11,24 @@ $(function(){
     // Soluce trouvé pour contrer le décallage des coordonnées ici : https://stackoverflow.com/questions/17130395/real-mouse-position-in-canvas
     var canvassize = canvas.getBoundingClientRect();
     var mousetracker;   
+
+    // On récupère la position du 1er canvas pourdéterminer où les autres doivent se placer pour faire des layers. offset() renvoie la position top et left de l'élément 
+    var topPos = $("#canvas").offset().top;
+    var leftPos = $("#canvas").offset().left;
+
+
+    // création du second layer
+    var canvas2 = $("#canvas2")[0];
+    canvas2.setAttribute('width', 840);
+    canvas2.setAttribute('height', 480);
+    var ctx2 = canvas2.getContext("2d");
+	var cwidth2 = $("#canvas2").width();
+    var cheight2 = $("#canvas2").height();
+    var canvassize2 = canvas2.getBoundingClientRect();
+    $(".canvas2").css("position","absolute");
+    $(".canvas2").css("top",topPos);
+    $(".canvas2").css("left",leftPos);
+
     
     
     // méthode pour suivre les déplacements de la souris
@@ -60,14 +78,14 @@ $(function(){
         this.posy = posy;
         // On fixe le curseur aux coordonnées indiquées lors de sa création
         this.create = function() { 
-            ctx.fillStyle = "purple";
+            ctx2.fillStyle = "purple";
             // ctx.lineWidth=3;
-            ctx.fillRect(this.posx,this.posy,20,20);
+            ctx2.fillRect(this.posx,this.posy,20,20);
         }
         // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
         this.regenerate = function(what){
-            ctx.clearRect(this.posx, this.posy, 20, 20);
-            ctx.fillStyle = "purple";
+            ctx2.clearRect(this.posx, this.posy, 20, 20);
+            ctx2.fillStyle = "purple";
             // Le switch permets de modifier la position en fonction de la touche pressée on ecrase la valeur de x ou y de notre objet en faisant +20 ou -20 sur la précédente valeur de x
             switch (what) {
                 case "+x":                                
@@ -83,7 +101,7 @@ $(function(){
                     this.posy += 20;                                       
                     break;
             }
-            ctx.fillRect(this.posx,this.posy,20,20);            
+            ctx2.fillRect(this.posx,this.posy,20,20);            
         }
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){

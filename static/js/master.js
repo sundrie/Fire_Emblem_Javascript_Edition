@@ -61,7 +61,46 @@ $(function(){
         // On fixe le curseur aux coordonnées indiquées lors de sa création
         this.create = function() { 
             ctx.fillStyle = "black";
+            ctx.lineWidth=3;
             ctx.strokeRect(this.posx,this.posy,20,20);
+        }
+        // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
+        this.regenerate = function(what,newpos){
+            ctx.clearRect(this.posx, this.posy, 20, 20);
+            ctx.fillStyle = "black";
+            ctx.lineWidth=3;
+            switch (what) {
+                case "+x":
+                    console.log("à droite !");                    
+                    break;
+                case "-x":
+                    console.log("à gauche !");                    
+                    break;
+                case "-y":
+                    console.log("en haut !");                    
+                    break;
+                case "+y":
+                    console.log("en bas !");                    
+                    break;
+            }
+            ctx.strokeRect(this.posx,this.posy,20,20);            
+        }
+        // Ceci va permettre de modifier la position du personnage 
+        this.move = function(direction){
+            if (direction === "ArrowRight") {
+                // Ici on ajoute +20 à la position de l'objet ce qui fait que sa précédente position sera écrasée par celle ci
+                // Et on le recrée aux nouvelles positions les 2 20 sont juste la largeur et hauteur du personnage étant donné que chaque personnage occupe une case ceci sera en fonction de la taille des cases 
+                this.regenerate("+x",this.posx += 20);                     
+            }
+            if (direction === "ArrowLeft") {                
+                this.regenerate("-x",this.posx -= 20);
+            }
+            if (direction === "ArrowUp") {
+                this.regenerate("-y",this.posy -= 20);
+            }
+            if (direction ==="ArrowDown") {
+                this.regenerate("+y",this.posy += 20);
+            }
         }
     }
 
@@ -75,36 +114,7 @@ $(function(){
             ctx.fillStyle = "blue";
             ctx.fillRect(this.posx,this.posy,20,20);
         }
-        // Ceci va permettre de modifier la position du personnage 
-        this.move = function(direction){
-            if (direction === "ArrowRight") {
-                // On supprime la précédente position du personnage
-                ctx.clearRect(this.posx, this.posy, 20, 20);                
-                ctx.fillStyle = "blue";
-                // Ici on ajoute +20 à la position de l'objet ce qui fait que sa précédente position sera écrasée par celle ci
-                this.posx += 20; 
-                // Et on le recrée aux nouvelles positions les 2 20 sont juste la largeur et hauteur du personnage étant donné que chaque personnage occupe une case ceci sera en fonction de la taille des cases 
-                ctx.fillRect(this.posx,this.posy,20,20);                     
-            }
-            if (direction === "ArrowLeft") {
-                ctx.clearRect(this.posx, this.posy, 20, 20);                
-                ctx.fillStyle = "blue";
-                this.posx -= 20; 
-                ctx.fillRect(this.posx,this.posy,20,20);
-            }
-            if (direction === "ArrowUp") {
-                ctx.clearRect(this.posx, this.posy, 20, 20);                
-                ctx.fillStyle = "blue";
-                this.posy -= 20; 
-                ctx.fillRect(this.posx,this.posy,20,20);
-            }
-            if (direction ==="ArrowDown") {
-                ctx.clearRect(this.posx, this.posy, 20, 20);                
-                ctx.fillStyle = "blue";
-                this.posy += 20; 
-                ctx.fillRect(this.posx,this.posy,20,20);
-            }
-        }
+        
     }
     
     function mainMenu(){
@@ -140,14 +150,14 @@ $(function(){
         var theCursor = new Cursor(420,240);
         theCursor.create();
 
-        
+
         var chrom = new Character(0,0);
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
 
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
-            chrom.move(e.key);             
+            theCursor.move(e.key);             
         });
     }
 });

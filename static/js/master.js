@@ -101,18 +101,26 @@ $(function(){
                         break;
                     }
                 case "-x":
-                if (this.posx > 0) {                
-                    this.posx -= 20;                  
-                    break;
-                } else {             
-                    break;
-                }
-                case "-y":                
-                    this.posy -= 20;                
-                    break;
-                case "+y":                
-                    this.posy += 20;                                       
-                    break;
+                    if (this.posx > 0) {                
+                        this.posx -= 20;                  
+                        break;
+                    } else {             
+                        break;
+                    }
+                case "-y":
+                    if (this.posy > 0) {                 
+                        this.posy -= 20;                
+                        break;
+                    } else {
+                        break;
+                    }
+                case "+y":
+                    if (this.posy < cheight2-20) {                
+                        this.posy += 20;                                       
+                        break;
+                    } else {
+                        break;
+                    }
             }
             ctx2.drawImage(imgCursor,this.posx,this.posy);          
         }

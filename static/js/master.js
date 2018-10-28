@@ -171,6 +171,21 @@ $(function(){
             }
         }        
     }
+
+    var pauseMenu = {
+        x: 320,
+        y : 0,
+        width : 400,
+        height : 480, 
+        color : "grey",
+        // méthode pour créer le menu
+        create : function() {
+            // Ajoute de la couleur au fond de notre menu
+            ctx3.fillStyle = this.color;
+            // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
+            ctx3.fillRect(this.x,this.y,this.width,this.height);            
+        }
+    } 
     
     function mainMenu(){
         // Notre image en fond
@@ -211,14 +226,16 @@ $(function(){
         theCursor.create();
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
-            theCursor.move(e.key);             
+            theCursor.move(e.key);                
+            if (e.key === "Escape") {
+                pauseMenu.create();
+            }
+            
         });
 
         var chrom = new Character(0,0);
         var imgChara = new Image();
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        chrom.create(imgChara);       
-        
-        ctx3.fillRect(20,20,150,100);
+        chrom.create(imgChara);            
     }
 });

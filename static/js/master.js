@@ -170,6 +170,10 @@ $(function(){
                 this.regenerate("+y");
             }
         }
+        // Ceci va afficher les infos sur ce que le curseur survole
+        this.displayInfo = function(target){
+            console.log(target);            
+        }
     }
 
     function Character(posx,posy) {
@@ -281,6 +285,12 @@ $(function(){
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
             theCursor.move(e.key);
+            console.log("Chrom : "+chrom.posx,chrom.posy);
+            console.log("Curseur : "+theCursor.posx,theCursor.posy);
+            if (theCursor.posx === chrom.posx && theCursor.posy === chrom.posy) {
+                theCursor.displayInfo(chrom);
+            }            
+            
             // Si le jeu n'est pas en pause donc on le mets en pause                  
             if (e.key === "Escape" && isOnPause === false) {
                 pauseMenu.create();
@@ -291,7 +301,7 @@ $(function(){
                 pauseMenu.destroy();
                 // Et le jeu n'étant plus en pause on remets la variable à faux
                 isOnPause = false;
-            }           
+            }                   
         });
 
         var chrom = new Character(420,460);

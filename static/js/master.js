@@ -172,14 +172,17 @@ $(function(){
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(target){
-            console.log(target);            
+            console.log(target);
+            // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
+            infoPerso.create();
         }
     }
 
-    function Character(posx,posy) {
+    function Character(posx,posy,HP) {
         // posx et posy permettes de déterminer où se trouve le personnage
         this.posx = posx;
         this.posy = posy;
+        this.HP = HP;
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
         this.create = function(imgChara) { 
@@ -241,6 +244,22 @@ $(function(){
             ctx4.fillRect(this.x,this.y,this.width,this.height);                 
         }
     }  
+
+    // Affiche les infos sur le personnage
+    var infoPerso = {
+        x: 500,
+        y : 40,
+        width : 300,
+        height : 400, 
+        color : "grey",
+        // méthode pour créer le menu
+        create : function() {            
+            // Ajoute de la couleur au fond de notre menu
+            ctx4.fillStyle = this.color;
+            // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
+            ctx4.fillRect(this.x,this.y,this.width,this.height);                 
+        }
+    } 
     
     function mainMenu(){
         // Notre image en fond
@@ -304,7 +323,7 @@ $(function(){
             }                   
         });
 
-        var chrom = new Character(420,460);
+        var chrom = new Character(420,460,50);
         var imgChara = new Image();
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create(imgChara);

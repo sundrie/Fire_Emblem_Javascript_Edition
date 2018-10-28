@@ -34,6 +34,20 @@ $(function(){
     $(".canvas2").css("top",topPos);
     $(".canvas2").css("left",leftPos);
     
+    // création du troisième layer
+    $(".wrapper").append("<canvas id='canvas3' class='canvas3'></canvas>");
+    var canvas3 = $("#canvas3")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas3.setAttribute('width', cwidth);
+    canvas3.setAttribute('height', cheight);
+    var ctx3 = canvas3.getContext("2d");
+	var cwidth3 = $("#canvas3").width();
+    var cheight3 = $("#canvas3").height();
+    var canvassize3 = canvas3.getBoundingClientRect();
+    $(".canvas3").css("position","absolute");
+    $(".canvas3").css("top",topPos);
+    $(".canvas3").css("left",leftPos)
+
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
         // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  
@@ -203,6 +217,8 @@ $(function(){
         var chrom = new Character(0,0);
         var imgChara = new Image();
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        chrom.create(imgChara);        
+        chrom.create(imgChara);       
+        
+        ctx3.fillRect(20,20,150,100);
     }
 });

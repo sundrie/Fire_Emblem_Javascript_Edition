@@ -170,14 +170,19 @@ $(function(){
         ctx.fillText('Javascript Edition',430,230);         
         ctx.fillStyle="#000000";
         ctx.font = '30px Arial';
-        ctx.fillText('Appuyez sur la touche Entrée pour commencer', 100, 400);         
+        ctx.fillText('Appuyez sur la touche Entrée pour commencer', 100, 400);  
     }
     mainMenu();    
 
+    // Ceci indique si l'utilisateur a appuyé sur démarrer le jeu de base on l'initialise à faux 
+    var launchedGame = false;
     // Lorsque la touche Entrée est pressée on peut passer au jeu
     $(document).keypress(function(e){
-        if(e.key === "Enter"){
+        // Si la touche Enter est appuyé et que le jeu n'a pas encore été lancé alors on affiche la fenêtre du jeu
+        if(e.key === "Enter" && launchedGame === false){
             gameScreen();
+            // Le jeu ayant été lancé on passe la variable a vrai empêchant ce bout de code de se réexecuté et provoquer des bugs
+            launchedGame = true;
         }
     });
 

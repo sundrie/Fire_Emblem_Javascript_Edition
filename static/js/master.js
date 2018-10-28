@@ -180,8 +180,11 @@ $(function(){
         // On fixe le personnage aux coordonnées indiquées lors de sa création
         this.create = function(imgChara) { 
             imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/chrom.png";
+            // Sans ces variables pour le drawImage ça ne marcherait pas this.posx et this.posy renvoie undefined si mis dans le drawImage
+            var x = this.posx;
+            var y = this.posy;
             imgChara.onload = function(){
-                ctx.drawImage(imgChara,0,0);
+                ctx.drawImage(imgChara,x,y);
             }
         }        
     }
@@ -218,6 +221,22 @@ $(function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         } 
     } 
+
+    // Affiche les infos sur le terrain
+    var infoMap = {
+        x: 0,
+        y : 0,
+        width : 100,
+        height : 60, 
+        color : "grey",
+        // méthode pour créer le menu
+        create : function() {            
+            // Ajoute de la couleur au fond de notre menu
+            ctx4.fillStyle = this.color;
+            // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
+            ctx4.fillRect(this.x,this.y,this.width,this.height);                 
+        }
+    }  
     
     function mainMenu(){
         // Notre image en fond
@@ -275,9 +294,10 @@ $(function(){
             }           
         });
 
-        var chrom = new Character(0,0);
+        var chrom = new Character(420,460);
         var imgChara = new Image();
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        chrom.create(imgChara);            
+        chrom.create(imgChara);
+        infoMap.create();            
     }
 });

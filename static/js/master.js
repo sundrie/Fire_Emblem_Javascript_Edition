@@ -172,9 +172,9 @@ $(function(){
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(target){
-            console.log(target);
+            // console.log(target);
             // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-            infoPerso.create();
+            infoPerso.create(target);
         }
     }
 
@@ -253,11 +253,16 @@ $(function(){
         height : 400, 
         color : "grey",
         // méthode pour créer le menu
-        create : function() {            
+        create : function(target) {            
             // Ajoute de la couleur au fond de notre menu
             ctx4.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx4.fillRect(this.x,this.y,this.width,this.height);                 
+            ctx4.fillRect(this.x,this.y,this.width,this.height);
+
+            ctx4.fillStyle = "black";
+            ctx4.font = "60px Arial";        
+            // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
+            ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);                 
         }
     } 
     

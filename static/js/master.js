@@ -172,18 +172,33 @@ $(function(){
         }        
     }
 
+    // Fonction permettant de centrer quelque chose par rapport à son conteneur
+    function centerThings(x,y,width,height,cwidth,cheight) {
+        console.log(x,y,width,height,cwidth,cheight);
+        var centeredx = (cwidth-width)/2;
+        var centeredy = (cheight-height)/2;
+        //console.log(centeredx,centeredy);
+        var returnedVal = [centeredx,centeredy];
+        return returnedVal;
+    }
+
     var pauseMenu = {
-        x: 320,
+        x: 0,
         y : 0,
         width : 400,
-        height : 480, 
+        height : 400, 
         color : "grey",
         // méthode pour créer le menu
-        create : function() {
+        create : function() {            
             // Ajoute de la couleur au fond de notre menu
             ctx3.fillStyle = this.color;
+            // Ceci va nous permettre de centrer notre contenu
+            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth3,cheight3);
+            // On écrase les deux 0 avec nos nouvelles valeurs 
+            this.x = centerMe[0];
+            this.y = centerMe[1];
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx3.fillRect(this.x,this.y,this.width,this.height);            
+            ctx3.fillRect(this.x,this.y,this.width,this.height);                 
         }
     } 
     

@@ -173,11 +173,10 @@ $(function(){
     }
 
     // Fonction permettant de centrer quelque chose par rapport à son conteneur
+    // Retourne un array [0] pour x et [1] pour y
     function centerThings(x,y,width,height,cwidth,cheight) {
-        console.log(x,y,width,height,cwidth,cheight);
         var centeredx = (cwidth-width)/2;
         var centeredy = (cheight-height)/2;
-        //console.log(centeredx,centeredy);
         var returnedVal = [centeredx,centeredy];
         return returnedVal;
     }
@@ -199,7 +198,10 @@ $(function(){
             this.y = centerMe[1];
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
             ctx3.fillRect(this.x,this.y,this.width,this.height);                 
-        }
+        },
+        destroy : function(){
+            ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+        } 
     } 
     
     function mainMenu(){
@@ -239,13 +241,23 @@ $(function(){
         // On créé notre curseur pour intéragir avec le jeu
         var theCursor = new Cursor(420,240);
         theCursor.create();
+        
+        // Permets de déterminer si le jeu est en pause ou non de base il ne l'est pas
+        var isOnPause = false;
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
-            theCursor.move(e.key);                
-            if (e.key === "Escape") {
+            theCursor.move(e.key);
+            // Si le jeu n'est pas en pause donc on le mets en pause                  
+            if (e.key === "Escape" && isOnPause === false) {
                 pauseMenu.create();
-            }
-            
+                // Maintenant on mets qu'il est en pause
+                isOnPause = true;
+            } else if (e.key === "Escape" && isOnPause === true) {
+                // Sinon si le jeu est déjà en pause donc qu'on veut relancer et bien on appelle la méthode pour enlever le menu
+                pauseMenu.destroy();
+                // Et le jeu n'étant plus en pause on remets la variable à faux
+                isOnPause = false;
+            }           
         });
 
         var chrom = new Character(0,0);

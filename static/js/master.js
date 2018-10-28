@@ -46,7 +46,21 @@ $(function(){
     var canvassize3 = canvas3.getBoundingClientRect();
     $(".canvas3").css("position","absolute");
     $(".canvas3").css("top",topPos);
-    $(".canvas3").css("left",leftPos)
+    $(".canvas3").css("left",leftPos);
+
+    // création du quatrième layer
+    $(".wrapper").append("<canvas id='canvas4' class='canvas4'></canvas>");
+    var canvas4 = $("#canvas4")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas4.setAttribute('width', cwidth);
+    canvas4.setAttribute('height', cheight);
+    var ctx4 = canvas4.getContext("2d");
+	var cwidth4 = $("#canvas4").width();
+    var cheight4 = $("#canvas4").height();
+    var canvassize4 = canvas4.getBoundingClientRect();
+    $(".canvas4").css("position","absolute");
+    $(".canvas4").css("top",topPos);
+    $(".canvas4").css("left",leftPos);
 
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
@@ -181,6 +195,7 @@ $(function(){
         return returnedVal;
     }
 
+    // le menu de pause en jeu
     var pauseMenu = {
         x: 0,
         y : 0,

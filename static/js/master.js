@@ -194,21 +194,22 @@ $(function(){
             var y = this.posy;
             imgChara.onload = function(){
                 ctx.drawImage(imgChara,x,y);
-            }
-            
+            }            
             radarMap.listAllCharacterPos(this);
         }                
     }
 
+    // notre liste de toutes les infos sur les Characters
+    var listCharacter = [];
     // Cet objet va nous permettre d'enregistrer les positions de toutes les instances de notre classe Character
     var radarMap = { 
-        listAllCharacterPos : function(target) {          
-            console.log(target);
-            var listCharacter = [];
-            // listCharacter.push({
-            //     CharacterName : 'RoomName', 
-            //     Item : []
-            // });                       
+        listAllCharacterPos : function(target){              
+            listCharacter.push({
+                CharacterName : target.name, 
+                posx : target.posx,
+                posy : target.posy
+            }); 
+            console.log(listCharacter);                      
         }
     }  
 
@@ -344,10 +345,13 @@ $(function(){
                 isOnPause = false;
             }                   
         });
+        infoMap.create();    
 
         var chrom = new Character("Chrom",420,460,50);
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
-        infoMap.create();                
+
+        var cordelia = new Character("Cordelia", 200,200,40)
+        cordelia.create();      
     }
 });

@@ -157,6 +157,9 @@ $(function(){
         }
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){
+
+            this.displayInfo();
+
             if (direction === "ArrowRight") {
                 this.regenerate("+x");                     
             }
@@ -168,17 +171,27 @@ $(function(){
             }
             if (direction ==="ArrowDown") {
                 this.regenerate("+y");
-            }
+            }            
         }
         // Ceci va afficher les infos sur ce que le curseur survole
-        this.displayInfo = function(target){
-            console.log("Chrom : "+chrom.posx,chrom.posy);
-            console.log("Curseur : "+theCursor.posx,theCursor.posy);
-            if (theCursor.posx === chrom.posx && theCursor.posy === chrom.posy) {
-                theCursor.displayInfo(chrom);
-            }            
+        this.displayInfo = function(){
+            // console.log(this.posx,this.posy);
+            // console.log(listCharacter[0].posx);
+            for (i = 0; i < listCharacter.length; i++) {
+                console.log(listCharacter[i].posx);
+
+                if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy) {
+                    console.log("Vous êtes sur : " + listCharacter[i].name);
+                    
+                }
+                
+            }
+            
+            // if (theCursor.posx === chrom.posx && theCursor.posy === chrom.posy) {
+            //     theCursor.displayInfo(chrom);
+            // }            
             // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-            infoPerso.create(target);
+            // infoPerso.create(target);
         }
     }
 

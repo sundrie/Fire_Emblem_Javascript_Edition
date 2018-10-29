@@ -178,23 +178,39 @@ $(function(){
         }
     }
 
-    function Character(posx,posy,HP) {
+    function Character(name,posx,posy,HP) {
         // posx et posy permettes de déterminer où se trouve le personnage
+        this.name = name;
         this.posx = posx;
         this.posy = posy;
         this.HP = HP;
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
-        this.create = function(imgChara) { 
-            imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/chrom.png";
+        this.create = function() { 
+            var imgChara = new Image();
+            imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/"+ this.name +".png";
             // Sans ces variables pour le drawImage ça ne marcherait pas this.posx et this.posy renvoie undefined si mis dans le drawImage
             var x = this.posx;
             var y = this.posy;
             imgChara.onload = function(){
                 ctx.drawImage(imgChara,x,y);
             }
-        }        
+            
+            radarMap.listAllCharacterPos(this);
+        }                
     }
+
+    // Cet objet va nous permettre d'enregistrer les positions de toutes les instances de notre classe Character
+    var radarMap = { 
+        listAllCharacterPos : function(target) {          
+            console.log(target);
+            var listCharacter = [];
+            // listCharacter.push({
+            //     CharacterName : 'RoomName', 
+            //     Item : []
+            // });                       
+        }
+    }  
 
     // Fonction permettant de centrer quelque chose par rapport à son conteneur
     // Retourne un array [0] pour x et [1] pour y
@@ -315,6 +331,7 @@ $(function(){
                 theCursor.displayInfo(chrom);
             }            
             
+            
             // Si le jeu n'est pas en pause donc on le mets en pause                  
             if (e.key === "Escape" && isOnPause === false) {
                 pauseMenu.create();
@@ -328,10 +345,9 @@ $(function(){
             }                   
         });
 
-        var chrom = new Character(420,460,50);
-        var imgChara = new Image();
+        var chrom = new Character("Chrom",420,460,50);
         // Ceci va créer notre personnage (définir sa place dans la grille)
-        chrom.create(imgChara);
-        infoMap.create();            
+        chrom.create();
+        infoMap.create();                
     }
 });

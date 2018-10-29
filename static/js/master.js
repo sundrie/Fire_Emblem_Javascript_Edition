@@ -103,8 +103,6 @@ $(function(){
         }
     } 
 
-    // Va nous indiquer si on est sur un Character
-    var onChara = false;
     // Pour pouvoir accéder au curseur n'importe où dans le code
     var imgCursor = new Image();
     // Le curseur pour se déplacer sur la carte et manipuler les personnages
@@ -171,27 +169,22 @@ $(function(){
             if (direction ==="ArrowDown") {
                 this.regenerate("+y");
             }
-            if (onChara === false) {
-                this.displayInfo();
-            } else if (onChara === true) {
-                infoPerso.destroy();
-            }      
+            this.displayInfo();   
               
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
+            // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
+            infoPerso.destroy();   
             for (i = 0; i < listCharacter.length; i++) {
                 if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy){
                     console.log("Vous êtes sur : " + listCharacter[i].CharacterName);
                     console.log(listCharacter[i]);
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
                     infoPerso.create(listCharacter[i]);
-                    onChara = true                    
-                }else{
-                    onChara = false;                 
-                }               
-            }
-            
+                }            
+            }       
+              
         }
     }
 
@@ -298,9 +291,9 @@ $(function(){
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
             ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);                 
         },
+        // Permets de supprimer la fenêtre 
         destroy : function(){
-            console.log("La fenêtre doit être détruite");
-            
+            ctx4.clearRect(this.x,this.y,this.width,this.height);            
         }
     } 
     

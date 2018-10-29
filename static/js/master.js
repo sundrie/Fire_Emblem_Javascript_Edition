@@ -175,12 +175,14 @@ $(function(){
         this.displayInfo = function(){
             for (i = 0; i < listCharacter.length; i++) {
                 if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy) {
-                    console.log("Vous êtes sur : " + listCharacter[i].CharacterName);                    
+                    console.log("Vous êtes sur : " + listCharacter[i].CharacterName);
+                    console.log(listCharacter[i]);
+                    // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
+                    infoPerso.create(listCharacter[i]);                    
                 }
                 
             }
-            // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-            // infoPerso.create(target);
+            
         }
     }
 
@@ -213,9 +215,9 @@ $(function(){
             listCharacter.push({
                 CharacterName : target.name, 
                 posx : target.posx,
-                posy : target.posy
-            }); 
-            console.log(listCharacter);                      
+                posy : target.posy,
+                HP : target.HP
+            });              
         }
     }  
 

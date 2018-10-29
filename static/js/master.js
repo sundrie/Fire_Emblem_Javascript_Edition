@@ -103,6 +103,8 @@ $(function(){
         }
     } 
 
+    // Va nous indiquer si on est sur un Character
+    var onChara = false;
     // Pour pouvoir accéder au curseur n'importe où dans le code
     var imgCursor = new Image();
     // Le curseur pour se déplacer sur la carte et manipuler les personnages
@@ -168,19 +170,26 @@ $(function(){
             }
             if (direction ==="ArrowDown") {
                 this.regenerate("+y");
-            }          
-            this.displayInfo();  
+            }
+            if (onChara === false) {
+                this.displayInfo();
+            } else if (onChara === true) {
+                infoPerso.destroy();
+            }      
+              
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
             for (i = 0; i < listCharacter.length; i++) {
-                if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy) {
+                if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy){
                     console.log("Vous êtes sur : " + listCharacter[i].CharacterName);
                     console.log(listCharacter[i]);
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-                    infoPerso.create(listCharacter[i]);                    
-                }
-                
+                    infoPerso.create(listCharacter[i]);
+                    onChara = true                    
+                }else{
+                    onChara = false;                 
+                }               
             }
             
         }
@@ -288,6 +297,10 @@ $(function(){
             ctx4.font = "60px Arial";        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
             ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);                 
+        },
+        destroy : function(){
+            console.log("La fenêtre doit être détruite");
+            
         }
     } 
     

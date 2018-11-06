@@ -199,10 +199,10 @@ $(function(){
                     var maxMvt = tilesize*character.mvt;
                     // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
                     // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
-                    for (i = 20; i <= maxMvt;i += tilesize) {
-                        console.log(i);         
+                    for (i = 20; i <= maxMvt;i += tilesize) {       
                         ctx.fillStyle = "lightblue";
-                        ctx.fillRect(character.posx+i,character.posy,tilesize,tilesize);                                      
+                        ctx.fillRect(character.posx+i,character.posy,tilesize,tilesize);
+                        ctx.fillRect(character.posx-i,character.posy,tilesize,tilesize);                                      
                     }
                 }
             });

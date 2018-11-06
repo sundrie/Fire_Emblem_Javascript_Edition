@@ -188,11 +188,12 @@ $(function(){
         }
     }
 
-    function Character(name,posx,posy,HP) {
+    function Character(name,posx,posy,mvt,HP) {
         // posx et posy permettes de déterminer où se trouve le personnage
         this.name = name;
         this.posx = posx;
         this.posy = posy;
+        this.mvt = mvt;
         this.HP = HP;
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
@@ -218,6 +219,7 @@ $(function(){
                 CharacterName : target.name, 
                 posx : target.posx,
                 posy : target.posy,
+                mvt : target.mvt,
                 HP : target.HP
             });              
         }
@@ -287,9 +289,11 @@ $(function(){
             ctx4.fillRect(this.x,this.y,this.width,this.height);
 
             ctx4.fillStyle = "black";
-            ctx4.font = "60px Arial";        
+            ctx4.font = "30px Arial";        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
-            ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);                 
+            ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);          
+            //
+            ctx4.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
         },
         // Permets de supprimer la fenêtre 
         destroy : function(){
@@ -356,11 +360,11 @@ $(function(){
         });
         infoMap.create();    
 
-        var chrom = new Character("Chrom",420,460,50);
+        var chrom = new Character("Chrom",420,460,5,50);
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
 
-        var cordelia = new Character("Cordelia", 200,200,40)
+        var cordelia = new Character("Cordelia", 200,200,7,40)
         cordelia.create();      
     }
 });

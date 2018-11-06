@@ -215,7 +215,7 @@ $(function(){
                     var c = 0;
                     // haut droit
                     var k = 20;                    
-                    for(j = 140; j >= 20;j -= tilesize){
+                    for(j = maxMvt; j >= 20;j -= tilesize){
                         k -= tilesize; 
                         // console.log(character.posx+j,character.posy);  
                                             
@@ -233,19 +233,19 @@ $(function(){
                     }
                     // bas droit
                     k = -20;
-                    for(j = 140; j >= 20;j -= tilesize){
+                    for(j = maxMvt; j >= 20;j -= tilesize){
                         k += tilesize; 
                         ctx.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
                     }
                     // bas gauche
                     k = 20;
-                    for(j = 140; j >= 20;j -= tilesize){
+                    for(j = maxMvt; j >= 20;j -= tilesize){
                         k -= tilesize; 
                         ctx.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
                     }
                     // haut gauche
                     k = -20;
-                    for(j = 140; j >= 20;j -= tilesize){
+                    for(j = maxMvt; j >= 20;j -= tilesize){
                         k += tilesize; 
                         ctx.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
                     }

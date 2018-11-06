@@ -190,9 +190,15 @@ $(function(){
         }
         // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
         this.showMvtPath = function(character){
-            console.log("Votre personnage peut se déplacer de "+ character.mvt);
-            
-            console.log(tilesize*5);            
+
+            $(document).keypress(function(e){
+                // Ceci permets de se lancer uniquement si on appuie sur la touche E comme pour "activer" l'unité
+                if(e.key === "e"){
+                    console.log("Votre personnage peut se déplacer de "+ character.mvt);            
+                    console.log(tilesize*5);  
+                }
+            });
+                      
         }
     }
 

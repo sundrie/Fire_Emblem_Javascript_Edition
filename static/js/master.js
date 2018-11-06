@@ -197,9 +197,12 @@ $(function(){
                     console.log("Votre personnage peut se déplacer de "+ character.mvt);   
                     // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
                     var maxMvt = tilesize*character.mvt;
-                    // Cette boucle va nous permettre de "dessiner" laportée de ouvement du personnage
-                    for (i = 0; i <= maxMvt;i += tilesize) {
-                        console.log(i);                                               
+                    // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
+                    // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
+                    for (i = 20; i <= maxMvt;i += tilesize) {
+                        console.log(i);         
+                        ctx.fillStyle = "lightblue";
+                        ctx.fillRect(character.posx+i,character.posy,tilesize,tilesize);                                      
                     }
                 }
             });

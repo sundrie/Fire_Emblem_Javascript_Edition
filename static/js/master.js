@@ -182,11 +182,22 @@ $(function(){
                     console.log(listCharacter[i]);
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
                     infoPerso.create(listCharacter[i]);
+                    // On appelle la fonction permettant de montrer les possibilités de mouvement
+                    this.showMvtPath(listCharacter[i]);
                 }            
             }       
               
         }
+        // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
+        this.showMvtPath = function(character){
+            console.log("Votre personnage peut se déplacer de "+ character.mvt);
+            
+            console.log(tilesize*5);            
+        }
     }
+
+    
+    
 
     function Character(name,posx,posy,mvt,HP) {
         // posx et posy permettes de déterminer où se trouve le personnage
@@ -274,7 +285,7 @@ $(function(){
         }
     }  
 
-    // Affiche les infos sur le personnage
+    // Affiche les infos sur le personnage dans une fenêtre
     var infoPerso = {
         x: 500,
         y : 40,

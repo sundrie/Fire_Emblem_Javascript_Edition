@@ -154,6 +154,8 @@ $(function(){
                     }
             }
             ctx2.drawImage(imgCursor,this.posx,this.posy);          
+            console.log(this.posx,this.posy);
+            
         }
         // Ceci va permettre de modifier la position du personnage 
         this.move = function(direction){
@@ -208,8 +210,27 @@ $(function(){
                         // Dessine en bas 
                         ctx.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
                         // Dessine en haut
-                        ctx.fillRect(character.posx,character.posy-i,tilesize,tilesize);                         
+                        ctx.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
                     }
+                    var c = 0;
+                    var k = 20;
+                    for(j = 140; j >= 20;j -= tilesize){
+                        k -= tilesize; 
+                        // console.log(character.posx+j,character.posy);  
+                                            
+                        // for(k = 20; k <= maxMvt;k += tilesize){
+                        //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
+                        //     c +=1;
+                        //     console.log(character.posx+j-k,character.posy-k);
+                            
+                        // }
+                        
+                        ctx.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                        // console.log(character.posx+j);
+                        
+                        c +=1;
+                    }
+                    console.log(c);
                 }
             });
                       

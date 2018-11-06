@@ -201,8 +201,14 @@ $(function(){
                     // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
                     for (i = 20; i <= maxMvt;i += tilesize) {       
                         ctx.fillStyle = "lightblue";
+                        // Dessine à droite
                         ctx.fillRect(character.posx+i,character.posy,tilesize,tilesize);
-                        ctx.fillRect(character.posx-i,character.posy,tilesize,tilesize);                                      
+                        // Dessine à gauche
+                        ctx.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
+                        // Dessine en bas 
+                        ctx.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
+                        // Dessine en haut
+                        ctx.fillRect(character.posx,character.posy-i,tilesize,tilesize);                         
                     }
                 }
             });

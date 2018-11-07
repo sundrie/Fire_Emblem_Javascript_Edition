@@ -243,7 +243,7 @@ $(function(){
             listAllCharacter[this.name] = this;
         }
         // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
-        this.showMvtPath = function(){
+        this.showMvtPath = function(){                   
             var character = this; 
             // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
             var maxMvt = tilesize*character.mvt;
@@ -297,11 +297,20 @@ $(function(){
             for(j = maxMvt; j >= 20;j -= tilesize){
                 k += tilesize; 
                 ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-            }                     
+            }             
+
+            $(document).keypress(function(e){
+                if(e.key === "e" && theCursor.posx === character.posx && theCursor.posy === character.posy){
+                    console.log("Unité activée ! Paré à rouler !");                    
+                }
+            });                     
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+        }
+        this.move = function(){
+            
         }
     }
 
@@ -408,6 +417,7 @@ $(function(){
         }
     });
 
+    var theCursor;
     // L'affichage du jeu
     function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -415,7 +425,7 @@ $(function(){
         $(".canvas").css("background-image","url('http://localhost/Fire_Emblem_Javascript_Edition/static/img/grid.png')");   
         
         // On créé notre curseur pour intéragir avec le jeu
-        var theCursor = new Cursor(420,240);
+        theCursor = new Cursor(420,240);
         theCursor.create();
         
         // Permets de déterminer si le jeu est en pause ou non de base il ne l'est pas
@@ -426,7 +436,7 @@ $(function(){
                 theCursor.move(e.key);    
                 $.each(listAllCharacter, function(){   
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy){
-                        this.showMvtPath();
+                        this.showMvtPath();                        
                     }
                 });
                                                         

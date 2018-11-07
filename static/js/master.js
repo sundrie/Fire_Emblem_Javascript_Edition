@@ -127,18 +127,18 @@ $(function(){
         this.create = function() { 
             imgCursor.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/cursor.png";
             imgCursor.onload = function(){
-                ctx2.drawImage(imgCursor,420,240);
+                ctx4.drawImage(imgCursor,420,240);
             }            
         }
         // Cette fonction va permettre de recréer le curseur avec de nouveaux paramètres 
         this.regenerate = function(what){
-            ctx2.clearRect(this.posx, this.posy, tilesize, tilesize);
-            ctx2.fillStyle = "purple";
+            ctx4.clearRect(this.posx, this.posy, tilesize, tilesize);
+            ctx4.fillStyle = "purple";
             // Le switch permets de modifier la position en fonction de la touche pressée on ecrase la valeur de x ou y de notre objet en faisant +20 ou -20 sur la précédente valeur de x
             switch (what) {
                 case "+x":
                     // Ceci sert à ne pas dépasser notre zone de jeu tant que le x n'a pas atteint le max width et bien on peut ajouter +20 à notre x 
-                    if (this.posx < cwidth2-tilesize) {                                
+                    if (this.posx < cwidth4-tilesize) {                                
                         this.posx += tilesize;                 
                         break;             
                     } else {     
@@ -160,14 +160,14 @@ $(function(){
                         break;
                     }
                 case "+y":
-                    if (this.posy < cheight2-tilesize) {                
+                    if (this.posy < cheight4-tilesize) {                
                         this.posy += tilesize;                                       
                         break;
                     } else {
                         break;
                     }
             }
-            ctx2.drawImage(imgCursor,this.posx,this.posy);          
+            ctx4.drawImage(imgCursor,this.posx,this.posy);          
             console.log(this.posx,this.posy);
             
         }
@@ -218,15 +218,15 @@ $(function(){
                     // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
                     // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
                     for (i = 20; i <= maxMvt;i += tilesize) {       
-                        ctx.fillStyle = "lightblue";
+                        ctx3.fillStyle = "lightblue";
                         // Dessine à droite
-                        ctx.fillRect(character.posx+i,character.posy,tilesize,tilesize);
+                        ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
                         // Dessine à gauche
-                        ctx.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
+                        ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
                         // Dessine en bas 
-                        ctx.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
+                        ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
                         // Dessine en haut
-                        ctx.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
+                        ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
                     }
                     var c = 0;
                     // haut droit
@@ -242,7 +242,7 @@ $(function(){
                             
                         // }
                         
-                        ctx.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                        ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
                         // console.log(character.posx+j);
                         
                         c +=1;
@@ -251,26 +251,26 @@ $(function(){
                     k = -20;
                     for(j = maxMvt; j >= 20;j -= tilesize){
                         k += tilesize; 
-                        ctx.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                        ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
                     }
                     // bas gauche
                     k = 20;
                     for(j = maxMvt; j >= 20;j -= tilesize){
                         k -= tilesize; 
-                        ctx.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
+                        ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
                     }
                     // haut gauche
                     k = -20;
                     for(j = maxMvt; j >= 20;j -= tilesize){
                         k += tilesize; 
-                        ctx.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
+                        ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
                     }
                 }
             });                     
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
     }
 
@@ -293,7 +293,7 @@ $(function(){
             var x = this.posx;
             var y = this.posy;
             imgChara.onload = function(){
-                ctx.drawImage(imgChara,x,y);
+                ctx2.drawImage(imgChara,x,y);
             }            
             radarMap.listAllCharacterPos(this);
         }                
@@ -333,17 +333,17 @@ $(function(){
         // méthode pour créer le menu
         create : function() {            
             // Ajoute de la couleur au fond de notre menu
-            ctx3.fillStyle = this.color;
+            ctx5.fillStyle = this.color;
             // Ceci va nous permettre de centrer notre contenu
-            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth3,cheight3);
+            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth5,cheight5);
             // On écrase les deux 0 avec nos nouvelles valeurs 
             this.x = centerMe[0];
             this.y = centerMe[1];
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx3.fillRect(this.x,this.y,this.width,this.height);                 
+            ctx5.fillRect(this.x,this.y,this.width,this.height);                 
         },
         destroy : function(){
-            ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+            ctx5.clearRect(0, 0, canvas5.width, canvas5.height);
         } 
     } 
 
@@ -357,9 +357,9 @@ $(function(){
         // méthode pour créer le menu
         create : function() {            
             // Ajoute de la couleur au fond de notre menu
-            ctx4.fillStyle = this.color;
+            ctx5.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx4.fillRect(this.x,this.y,this.width,this.height);                 
+            ctx5.fillRect(this.x,this.y,this.width,this.height);                 
         }
     }  
 
@@ -373,20 +373,20 @@ $(function(){
         // méthode pour créer le menu
         create : function(target) {            
             // Ajoute de la couleur au fond de notre menu
-            ctx4.fillStyle = this.color;
+            ctx5.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx4.fillRect(this.x,this.y,this.width,this.height);
+            ctx5.fillRect(this.x,this.y,this.width,this.height);
 
-            ctx4.fillStyle = "black";
-            ctx4.font = "30px Arial";        
+            ctx5.fillStyle = "black";
+            ctx5.font = "30px Arial";        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
-            ctx4.fillText("HP : "+target.HP, this.x+40, this.y+60);          
+            ctx5.fillText("HP : "+target.HP, this.x+40, this.y+60);          
             //
-            ctx4.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
+            ctx5.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
         },
         // Permets de supprimer la fenêtre 
         destroy : function(){
-            ctx4.clearRect(this.x,this.y,this.width,this.height);            
+            ctx5.clearRect(this.x,this.y,this.width,this.height);            
         }
     } 
     

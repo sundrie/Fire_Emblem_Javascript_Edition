@@ -297,11 +297,11 @@ $(function(){
             for(j = maxMvt; j >= 20;j -= tilesize){
                 k += tilesize; 
                 ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-            }             
-
+            }
             $(document).keypress(function(e){
                 if(e.key === "e" && theCursor.posx === character.posx && theCursor.posy === character.posy){
-                    console.log("Unité activée ! Paré à rouler !");                    
+                    console.log("Unité activée ! Paré à rouler !");
+                    character.move();                    
                 }
             });                     
         }
@@ -310,7 +310,9 @@ $(function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
         this.move = function(){
-            
+            ctx2.clearRect(this.posx, this.posy, tilesize, tilesize);
+            ctx2.fillStyle = "black";
+            ctx2.fillRect(this.posx+20,this.posy-20,tilesize,tilesize);
         }
     }
 

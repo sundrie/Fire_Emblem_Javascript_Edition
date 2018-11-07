@@ -182,7 +182,7 @@ $(function(){
                     }
             }
             ctx4.drawImage(imgCursor,this.posx,this.posy);          
-            console.log(this.posx,this.posy);            
+            //console.log(this.posx,this.posy);            
         }
         // Ceci va permettre de modifier la position du curseur 
         this.move = function(direction){
@@ -206,18 +206,20 @@ $(function(){
             var cursor = this;
             // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
             infoPerso.destroy();        
-            $.each(listAllCharacter, function() {
+            $.each(listAllCharacter, function(){
                 if (cursor.posx === this.posx && cursor.posy === this.posy){
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-                    infoPerso.create(this);
+                    infoPerso.create(this);                    
+                } else {
+                    // Bizarrement ceci fixe le fait que seul une seule aire de mvt apparaisse 
+                    this.destroyMvtPath();
                 }            
             }); 
         }        
     }
 
     
-    var listAllCharacter = {};        
-    
+    var listAllCharacter = {};            
     
 
     function Character(name,posx,posy,mvt,HP) {
@@ -242,68 +244,60 @@ $(function(){
         }
         // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
         this.showMvtPath = function(){
-            var character = this;  
-            $(document).keypress(function(e){
-                // Ceci permets de se lancer uniquement si on appuie sur la touche E comme pour "activer" l'unité
-                if(e.key === "e"){
-                                      
-                    console.log("Votre personnage peut se déplacer de "+ character.mvt);   
-                    // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
-                    var maxMvt = tilesize*character.mvt;
-                    console.log(character);
+            var character = this; 
+            // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
+            var maxMvt = tilesize*character.mvt;
+            console.log(character);
+            // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
+            // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
+            for (i = 20; i <= maxMvt;i += tilesize) {
+                ctx3.fillStyle = "lightblue";
+                // Dessine à droite
+                ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
+                // Dessine à gauche
+                ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
+                // Dessine en bas 
+                ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
+                // Dessine en haut
+                ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
+            }
+            var c = 0;
+            // haut droit
+            var k = 20;                    
+            for(j = maxMvt; j >= 20;j -= tilesize){
+                k -= tilesize; 
+                // console.log(character.posx+j,character.posy);  
+                                        
+                // for(k = 20; k <= maxMvt;k += tilesize){
+                //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
+                //     c +=1;
+                //     console.log(character.posx+j-k,character.posy-k);
+                        
+                // }
                     
-                    // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
-                    // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
-                    for (i = 20; i <= maxMvt;i += tilesize) {
-                        ctx3.fillStyle = "lightblue";
-                        // Dessine à droite
-                        ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
-                        // Dessine à gauche
-                        ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
-                        // Dessine en bas 
-                        ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
-                        // Dessine en haut
-                        ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
-                    }
-                    var c = 0;
-                    // haut droit
-                    var k = 20;                    
-                    for(j = maxMvt; j >= 20;j -= tilesize){
-                        k -= tilesize; 
-                        // console.log(character.posx+j,character.posy);  
-                                            
-                        // for(k = 20; k <= maxMvt;k += tilesize){
-                        //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
-                        //     c +=1;
-                        //     console.log(character.posx+j-k,character.posy-k);
-                            
-                        // }
-                        
-                        ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                        // console.log(character.posx+j);
-                        
-                        c +=1;
-                    }
-                    // bas droit
-                    k = -20;
-                    for(j = maxMvt; j >= 20;j -= tilesize){
-                        k += tilesize; 
-                        ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                    }
-                    // bas gauche
-                    k = 20;
-                    for(j = maxMvt; j >= 20;j -= tilesize){
-                        k -= tilesize; 
-                        ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
-                    }
-                    // haut gauche
-                    k = -20;
-                    for(j = maxMvt; j >= 20;j -= tilesize){
-                        k += tilesize; 
-                        ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-                    }
-                }
-            });                     
+                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                // console.log(character.posx+j);
+                    
+                c +=1;
+            }
+            // bas droit
+            k = -20;
+            for(j = maxMvt; j >= 20;j -= tilesize){
+                k += tilesize; 
+                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+            }
+            // bas gauche
+            k = 20;
+            for(j = maxMvt; j >= 20;j -= tilesize){
+                k -= tilesize; 
+                ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
+            }
+            // haut gauche
+            k = -20;
+            for(j = maxMvt; j >= 20;j -= tilesize){
+                k += tilesize; 
+                ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
+            }                     
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
@@ -429,23 +423,13 @@ $(function(){
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
             if (e.key==="ArrowUp" || e.key==="ArrowRight" || e.key==="ArrowDown" || e.key==="ArrowLeft") {
-                theCursor.move(e.key);
-                // for (i = 0; i < listCharacter.length; i++) {
-                //     if (theCursor.posx === listCharacter[i].posx && theCursor.posy === listCharacter[i].posy){      
-                //         // On appelle la fonction permettant de montrer les possibilités de mouvement
-                //         listCharacter[i].showMvtPath();
-                //         console.log(listCharacter[i]);                        
-                //     }       
-                // }  
-                $.each(listAllCharacter, function() {
-                    
-                    if (theCursor.posx === this.posx && theCursor.posy === this.posy){ 
-                        console.log(this);
+                theCursor.move(e.key);    
+                $.each(listAllCharacter, function(){   
+                    if (theCursor.posx === this.posx && theCursor.posy === this.posy){
                         this.showMvtPath();
-                    }else{
-                        this.destroyMvtPath();
-                    }            
-                });                                        
+                    }
+                });
+                                                        
             }                     
             // Si le jeu n'est pas en pause donc on le mets en pause                  
             if (e.key === "Escape" && isOnPause === false) {
@@ -467,11 +451,5 @@ $(function(){
 
         var cordelia = new Character("Cordelia", 200,200,7,40)
         cordelia.create();      
-
-        console.log(listAllCharacter);
-        console.log(listAllCharacter.Chrom);
-
-        
-         
     }
 });

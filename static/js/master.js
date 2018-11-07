@@ -76,6 +76,20 @@ $(function(){
     $(".canvas5").css("top",topPos);
     $(".canvas5").css("left",leftPos);
 
+    // création du sixième layer
+    $(".wrapper").append("<canvas id='canvas6' class='canvas6'></canvas>");
+    var canvas6 = $("#canvas6")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas6.setAttribute('width', cwidth);
+    canvas6.setAttribute('height', cheight);
+    var ctx6 = canvas6.getContext("2d");
+	var cwidth6 = $("#canvas6").width();
+    var cheight6 = $("#canvas6").height();
+    var canvassize6 = canvas6.getBoundingClientRect();
+    $(".canvas6").css("position","absolute");
+    $(".canvas6").css("top",topPos);
+    $(".canvas6").css("left",leftPos);
+
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
         // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  
@@ -327,23 +341,23 @@ $(function(){
     var pauseMenu = {
         x: 0,
         y : 0,
-        width : 400,
+        width : 300,
         height : 400, 
         color : "grey",
         // méthode pour créer le menu
         create : function() {            
             // Ajoute de la couleur au fond de notre menu
-            ctx5.fillStyle = this.color;
+            ctx6.fillStyle = this.color;
             // Ceci va nous permettre de centrer notre contenu
-            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth5,cheight5);
+            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth6,cheight6);
             // On écrase les deux 0 avec nos nouvelles valeurs 
             this.x = centerMe[0];
             this.y = centerMe[1];
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx5.fillRect(this.x,this.y,this.width,this.height);                 
+            ctx6.fillRect(this.x,this.y,this.width,this.height);                 
         },
         destroy : function(){
-            ctx5.clearRect(0, 0, canvas5.width, canvas5.height);
+            ctx6.clearRect(this.x, this.y, this.width, this.height);
         } 
     } 
 

@@ -62,6 +62,20 @@ $(function(){
     $(".canvas4").css("top",topPos);
     $(".canvas4").css("left",leftPos);
 
+    // création du cinquième layer
+    $(".wrapper").append("<canvas id='canvas5' class='canvas5'></canvas>");
+    var canvas5 = $("#canvas5")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas5.setAttribute('width', cwidth);
+    canvas5.setAttribute('height', cheight);
+    var ctx5 = canvas5.getContext("2d");
+	var cwidth5 = $("#canvas5").width();
+    var cheight5 = $("#canvas5").height();
+    var canvassize5 = canvas5.getBoundingClientRect();
+    $(".canvas5").css("position","absolute");
+    $(".canvas5").css("top",topPos);
+    $(".canvas5").css("left",leftPos);
+
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
         // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  

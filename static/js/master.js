@@ -177,7 +177,9 @@ $(function(){
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
             // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
-            infoPerso.destroy();   
+            infoPerso.destroy();        
+            // Permets d'enlever l'aide au mouvement
+            this.destroyMvtPath();
             for (i = 0; i < listCharacter.length; i++) {
                 if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy){
                     console.log("Vous êtes sur : " + listCharacter[i].CharacterName);
@@ -250,8 +252,11 @@ $(function(){
                         ctx.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
                     }
                 }
-            });
-                      
+            });                     
+        }
+        // Supprime le guide de mouvement
+        this.destroyMvtPath= function(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
     }
 

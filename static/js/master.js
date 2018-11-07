@@ -202,14 +202,16 @@ $(function(){
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
+            // Pour sauvegarder le this (Cursor)
+            var cursor = this;
             // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
             infoPerso.destroy();        
-            for (i = 0; i < listAllCharacter.length; i++) {
-                if (this.posx === listAllCharacter[i].posx && this.posy === listAllCharacter[i].posy){
+            $.each(listAllCharacter, function() {
+                if (cursor.posx === this.posx && cursor.posy === this.posy){
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-                    infoPerso.create(listAllCharacter[i]);
+                    infoPerso.create(this);
                 }            
-            } 
+            }); 
         }        
     }
 

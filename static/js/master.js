@@ -182,10 +182,9 @@ $(function(){
                     }
             }
             ctx4.drawImage(imgCursor,this.posx,this.posy);          
-            console.log(this.posx,this.posy);
-            
+            console.log(this.posx,this.posy);            
         }
-        // Ceci va permettre de modifier la position du personnage 
+        // Ceci va permettre de modifier la position du curseur 
         this.move = function(direction){
             if (direction === "ArrowRight") {
                 this.regenerate("+x");                     
@@ -199,39 +198,61 @@ $(function(){
             if (direction ==="ArrowDown") {
                 this.regenerate("+y");
             }
-            this.displayInfo();   
-              
+            this.displayInfo();              
         }
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
             // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
             infoPerso.destroy();        
-            // Permets d'enlever l'aide au mouvement
-            this.destroyMvtPath();
-            for (i = 0; i < listCharacter.length; i++) {
-                if (this.posx === listCharacter[i].posx && this.posy === listCharacter[i].posy){
-                    console.log("Vous êtes sur : " + listCharacter[i].CharacterName);
-                    console.log(listCharacter[i]);
+            for (i = 0; i < listAllCharacter.length; i++) {
+                if (this.posx === listAllCharacter[i].posx && this.posy === listAllCharacter[i].posy){
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher
-                    infoPerso.create(listCharacter[i]);
-                    // On appelle la fonction permettant de montrer les possibilités de mouvement
-                    this.showMvtPath(listCharacter[i]);
+                    infoPerso.create(listAllCharacter[i]);
                 }            
-            }       
-              
+            } 
+        }        
+    }
+
+    
+    var listAllCharacter = {};        
+    
+    
+
+    function Character(name,posx,posy,mvt,HP) {
+        // posx et posy permettes de déterminer où se trouve le personnage
+        this.name = name;
+        this.posx = posx;
+        this.posy = posy;
+        this.mvt = mvt;
+        this.HP = HP;
+
+        // On fixe le personnage aux coordonnées indiquées lors de sa création
+        this.create = function() { 
+            var imgChara = new Image();
+            imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/"+ this.name +".png";
+            // Sans ces variables pour le drawImage ça ne marcherait pas this.posx et this.posy renvoie undefined si mis dans le drawImage
+            var x = this.posx;
+            var y = this.posy;
+            imgChara.onload = function(){
+                ctx2.drawImage(imgChara,x,y);
+            }
+            listAllCharacter[this.name] = this;
         }
         // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
-        this.showMvtPath = function(character){
+        this.showMvtPath = function(){
+            var character = this;  
             $(document).keypress(function(e){
                 // Ceci permets de se lancer uniquement si on appuie sur la touche E comme pour "activer" l'unité
                 if(e.key === "e"){
-                    console.log(character);                    
+                                      
                     console.log("Votre personnage peut se déplacer de "+ character.mvt);   
                     // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
                     var maxMvt = tilesize*character.mvt;
+                    console.log(character);
+                    
                     // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
                     // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
-                    for (i = 20; i <= maxMvt;i += tilesize) {       
+                    for (i = 20; i <= maxMvt;i += tilesize) {
                         ctx3.fillStyle = "lightblue";
                         // Dessine à droite
                         ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
@@ -287,46 +308,6 @@ $(function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
     }
-
-    
-    
-
-    function Character(name,posx,posy,mvt,HP) {
-        // posx et posy permettes de déterminer où se trouve le personnage
-        this.name = name;
-        this.posx = posx;
-        this.posy = posy;
-        this.mvt = mvt;
-        this.HP = HP;
-
-        // On fixe le personnage aux coordonnées indiquées lors de sa création
-        this.create = function() { 
-            var imgChara = new Image();
-            imgChara.src = "http://localhost/Fire_Emblem_Javascript_Edition/static/img/"+ this.name +".png";
-            // Sans ces variables pour le drawImage ça ne marcherait pas this.posx et this.posy renvoie undefined si mis dans le drawImage
-            var x = this.posx;
-            var y = this.posy;
-            imgChara.onload = function(){
-                ctx2.drawImage(imgChara,x,y);
-            }            
-            radarMap.listAllCharacterPos(this);
-        }                
-    }
-
-    // notre liste de toutes les infos sur les Characters
-    var listCharacter = [];
-    // Cet objet va nous permettre d'enregistrer les positions de toutes les instances de notre classe Character
-    var radarMap = { 
-        listAllCharacterPos : function(target){              
-            listCharacter.push({
-                CharacterName : target.name, 
-                posx : target.posx,
-                posy : target.posy,
-                mvt : target.mvt,
-                HP : target.HP
-            });              
-        }
-    }  
 
     // Fonction permettant de centrer quelque chose par rapport à son conteneur
     // Retourne un array [0] pour x et [1] pour y
@@ -394,8 +375,7 @@ $(function(){
             ctx5.fillStyle = "black";
             ctx5.font = "30px Arial";        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
-            ctx5.fillText("HP : "+target.HP, this.x+40, this.y+60);          
-            //
+            ctx5.fillText("HP : "+target.HP, this.x+40, this.y+60);      
             ctx5.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
         },
         // Permets de supprimer la fenêtre 
@@ -447,7 +427,23 @@ $(function(){
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
             if (e.key==="ArrowUp" || e.key==="ArrowRight" || e.key==="ArrowDown" || e.key==="ArrowLeft") {
-                theCursor.move(e.key);  
+                theCursor.move(e.key);
+                // for (i = 0; i < listCharacter.length; i++) {
+                //     if (theCursor.posx === listCharacter[i].posx && theCursor.posy === listCharacter[i].posy){      
+                //         // On appelle la fonction permettant de montrer les possibilités de mouvement
+                //         listCharacter[i].showMvtPath();
+                //         console.log(listCharacter[i]);                        
+                //     }       
+                // }  
+                $.each(listAllCharacter, function() {
+                    
+                    if (theCursor.posx === this.posx && theCursor.posy === this.posy){ 
+                        console.log(this);
+                        this.showMvtPath();
+                    }else{
+                        this.destroyMvtPath();
+                    }            
+                });                                        
             }                     
             // Si le jeu n'est pas en pause donc on le mets en pause                  
             if (e.key === "Escape" && isOnPause === false) {
@@ -469,5 +465,11 @@ $(function(){
 
         var cordelia = new Character("Cordelia", 200,200,7,40)
         cordelia.create();      
+
+        console.log(listAllCharacter);
+        console.log(listAllCharacter.Chrom);
+
+        
+         
     }
 });

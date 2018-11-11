@@ -224,7 +224,7 @@ $(function(){
     var spriteChara = {};
     
 
-    function Character(name,posx,posy,mvt,HP) {
+    function Character(name,posx,posy,mvt,HP){
         // posx et posy permettes de déterminer où se trouve le personnage
         this.name = name;
         this.posx = posx;
@@ -301,10 +301,11 @@ $(function(){
                 k += tilesize; 
                 ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
             }
+
             $(document).keypress(function(e){
                 if(e.key === "e" && theCursor.posx === character.posx && theCursor.posy === character.posy){
                     console.log("Unité activée ! Paré à rouler !");                    
-                    character.move(character);                    
+                    character.move(character);                
                 }
             });                     
         }
@@ -315,21 +316,21 @@ $(function(){
         this.move = function(character){
             $(document).keypress(function(e){
                 if(e.key === "e"){
-                    // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
-                    var previouslocation = [character.posx,character.posy];
-                    console.log("déplacement à cet endroit");
-                    ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-                    ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
-                    // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
-                    character.posx = theCursor.posx;  
-                    character.posy = theCursor.posy;                               
+                    // Si le joueur appuie sur la position où se trouve le sprite et bien on affiche l'image pour éviter sa disparition
+                    if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
+                        ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                    } else {                    
+                        // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
+                        var previouslocation = [character.posx,character.posy];
+                        console.log("déplacement à cet endroit");
+                        ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                        ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
+                        // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
+                        character.posx = theCursor.posx;  
+                        character.posy = theCursor.posy;    
+                    }                           
                 }
             });
-            
-            
-            
-            
-            // this.posx = 
         }
     }
 

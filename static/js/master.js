@@ -308,20 +308,41 @@ $(function(){
         }
         this.move = function(character){
             $(document).keypress(function(e){
+                console.log(character.name,character.posx,character.posy);
+                
+                // Si le joueur réappuie sur la touche E et bien on déplace le sprite
                 if(e.key === "e"){
+                    $.each(listAllCharacter, function(){   
+                        console.log(character.name +" = "+this.name+" ? ");
+                        
+                        if (theCursor.posx === this.posx && theCursor.posy === this.posy && character.name !== this.name){
+                            console.log("Hey tu es sur " + this.name + " tu ne peut pas y aller");
+                        } else if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
+                            ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                        } else {                    
+                            // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
+                            var previouslocation = [character.posx,character.posy];
+                            console.log("déplacement à cet endroit");
+                            ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                            ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
+                            // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
+                            character.posx = theCursor.posx;  
+                            character.posy = theCursor.posy;    
+                        }
+                    });
                     // Si le joueur appuie sur la position où se trouve le sprite et bien on affiche l'image pour éviter sa disparition
-                    if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
-                        ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-                    } else {                    
-                        // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
-                        var previouslocation = [character.posx,character.posy];
-                        console.log("déplacement à cet endroit");
-                        ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-                        ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
-                        // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
-                        character.posx = theCursor.posx;  
-                        character.posy = theCursor.posy;    
-                    }                           
+                    // if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
+                    //     ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                    // } else {                    
+                    //     // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
+                    //     var previouslocation = [character.posx,character.posy];
+                    //     console.log("déplacement à cet endroit");
+                    //     ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+                    //     ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
+                    //     // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
+                    //     character.posx = theCursor.posx;  
+                    //     character.posy = theCursor.posy;    
+                    // }                           
                 }
             });
         }
@@ -450,13 +471,14 @@ $(function(){
                 $.each(listAllCharacter, function(){   
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy){
                         this.showMvtPath();                        
-                    }                    
+                    }    
                 });                                                        
             }        
+            // Si la touche E est pressée et que l'on se trouve sur un personnage alors on peut le déplacer
             if(e.key === "e"){
                 $.each(listAllCharacter, function(){
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy) {
-                        console.log("Unité activée ! Paré à rouler !");                    
+                        console.log("Unité " + this.name + " activée ! Paré à rouler !");                    
                         this.move(this);
                     }                         
                 });       
@@ -479,10 +501,10 @@ $(function(){
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
 
-        var cordelia = new Character("Cordelia", 200,200,7,40)
+        var cordelia = new Character("Cordelia",200,200,7,40);
         cordelia.create();      
 
-        // console.log(spriteChara);
-        
+        var tharja = new Character("Tharja",100,160,5,35);
+        tharja.create();
     }
 });

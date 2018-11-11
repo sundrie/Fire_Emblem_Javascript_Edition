@@ -214,7 +214,8 @@ $(function(){
                     // Bizarrement ceci fixe le fait que seul une seule aire de mvt apparaisse 
                     this.destroyMvtPath();
                 }            
-            }); 
+            });             
+            infoMap.create("Plaine");  
         }        
     }
 
@@ -389,11 +390,29 @@ $(function(){
         height : 60, 
         color : "grey",
         // méthode pour créer le menu
-        create : function() {            
+        create : function(typeTerrain) {       
             // Ajoute de la couleur au fond de notre menu
             ctx5.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx5.fillRect(this.x,this.y,this.width,this.height);                 
+            ctx5.fillRect(this.x,this.y,this.width,this.height);      
+            var dataTerrain = {}; 
+            switch (typeTerrain) {
+                case "Plaine":
+                    dataTerrain ["def"] = 0;
+                    dataTerrain ["esq"] = 0;
+                    break;
+                case "Forêt":
+                    dataTerrain ["def"] = 1;
+                    dataTerrain ["esq"] = 10;
+                    break;
+            }
+            ctx5.fillStyle = "white";
+            ctx5.font = "15px Arial";  
+            // Le nom du terrain
+            ctx5.fillText(typeTerrain,this.x+10,this.y+20);
+            // Les caractéristiques du terrain
+            ctx5.font = "10px Arial";
+            ctx5.fillText("Def : "+dataTerrain.def+ " - Esq : "+dataTerrain.esq ,this.x+10,this.y+40);           
         }
     }  
 
@@ -467,7 +486,7 @@ $(function(){
         // Permets de détecter les touches du clavier
         $(document).keypress(function(e){         
             if (e.key==="ArrowUp" || e.key==="ArrowRight" || e.key==="ArrowDown" || e.key==="ArrowLeft") {
-                theCursor.move(e.key);    
+                theCursor.move(e.key);
                 $.each(listAllCharacter, function(){   
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy){
                         this.showMvtPath();                        
@@ -495,7 +514,7 @@ $(function(){
                 isOnPause = false;
             }                   
         });
-        infoMap.create();    
+          
 
         var chrom = new Character("Chrom",420,460,5,50);
         // Ceci va créer notre personnage (définir sa place dans la grille)

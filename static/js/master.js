@@ -300,14 +300,7 @@ $(function(){
             for(j = maxMvt; j >= 20;j -= tilesize){
                 k += tilesize; 
                 ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-            }
-
-            $(document).keypress(function(e){
-                if(e.key === "e" && theCursor.posx === character.posx && theCursor.posy === character.posy){
-                    console.log("Unité activée ! Paré à rouler !");                    
-                    character.move(character);                
-                }
-            });                     
+            }             
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
@@ -457,10 +450,17 @@ $(function(){
                 $.each(listAllCharacter, function(){   
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy){
                         this.showMvtPath();                        
-                    }
-                });
-                                                        
-            }                     
+                    }                    
+                });                                                        
+            }        
+            if(e.key === "e"){
+                $.each(listAllCharacter, function(){
+                    if (theCursor.posx === this.posx && theCursor.posy === this.posy) {
+                        console.log("Unité activée ! Paré à rouler !");                    
+                        this.move(this);
+                    }                         
+                });       
+            }             
             // Si le jeu n'est pas en pause donc on le mets en pause                  
             if (e.key === "Escape" && isOnPause === false) {
                 pauseMenu.create();

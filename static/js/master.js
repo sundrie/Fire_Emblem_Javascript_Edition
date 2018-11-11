@@ -219,7 +219,9 @@ $(function(){
     }
 
     
-    var listAllCharacter = {};            
+    var listAllCharacter = {};
+    // Cette variable va stocker tous les sprites sur la grilles des personnages
+    var spriteChara = {};
     
 
     function Character(name,posx,posy,mvt,HP) {
@@ -238,8 +240,9 @@ $(function(){
             var x = this.posx;
             var y = this.posy;
             imgChara.onload = function(){
-                ctx2.drawImage(imgChara,x,y);
+                ctx2.drawImage(imgChara,x,y);                
             }
+            spriteChara[this.name] = imgChara;
             listAllCharacter[this.name] = this;
         }
         // Ceci va afficher les possibilités de mouvement en illuminant les cases où il y a possibilité de s'y déplacer  
@@ -310,9 +313,7 @@ $(function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
         this.move = function(){
-            ctx2.clearRect(this.posx, this.posy, tilesize, tilesize);
-            ctx2.fillStyle = "black";
-            ctx2.fillRect(this.posx+20,this.posy-20,tilesize,tilesize);
+            ctx2.drawImage(spriteChara[this.name],this.posx+20,this.posy-20); 
         }
     }
 
@@ -463,5 +464,8 @@ $(function(){
 
         var cordelia = new Character("Cordelia", 200,200,7,40)
         cordelia.create();      
+
+        // console.log(spriteChara);
+        
     }
 });

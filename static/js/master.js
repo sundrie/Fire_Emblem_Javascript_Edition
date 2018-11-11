@@ -314,16 +314,22 @@ $(function(){
         }
         this.move = function(character){
             $(document).keypress(function(e){
-                var previouslocation = [character.posx,character.posy];
                 if(e.key === "e"){
-                    console.log(previouslocation);
-                    
+                    // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
+                    var previouslocation = [character.posx,character.posy];
                     console.log("déplacement à cet endroit");
                     ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-
-                    ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize)
+                    ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
+                    // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
+                    character.posx = theCursor.posx;  
+                    character.posy = theCursor.posy;                               
                 }
             });
+            
+            
+            
+            
+            // this.posx = 
         }
     }
 

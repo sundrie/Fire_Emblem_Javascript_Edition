@@ -304,7 +304,7 @@ $(function(){
             $(document).keypress(function(e){
                 if(e.key === "e" && theCursor.posx === character.posx && theCursor.posy === character.posy){
                     console.log("Unité activée ! Paré à rouler !");                    
-                    character.move();                    
+                    character.move(character);                    
                 }
             });                     
         }
@@ -312,18 +312,18 @@ $(function(){
         this.destroyMvtPath= function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
-        this.move = function(){
-            // Pour permettre de garder en mémoire le nom du personnage cible et éviter d'utiiser this.name qui renvie undefined
-            var target = this.name;
+        this.move = function(character){
             $(document).keypress(function(e){
+                var previouslocation = [character.posx,character.posy];
                 if(e.key === "e"){
+                    console.log(previouslocation);
+                    
                     console.log("déplacement à cet endroit");
-                    ctx2.drawImage(spriteChara[target],theCursor.posx,theCursor.posy); 
+                    ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
+
+                    ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize)
                 }
             });
-            
-            console.log(theCursor);
-            
         }
     }
 

@@ -416,28 +416,30 @@ $(function(){
 
     // Affiche les infos sur le personnage dans une fenêtre
     var infoPerso = {
-        x: 500,
-        y : 40,
-        width : 300,
-        height : 400, 
+        x: 0,
+        y : 0,
+        width : cwidth7,
+        height : cheight7, 
         color : "grey",
         // méthode pour créer le menu
-        create : function(target) {            
+        create : function(target) {
+            console.log(this);
+                        
             // Ajoute de la couleur au fond de notre menu
-            ctx5.fillStyle = this.color;
+            ctx7.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
-            ctx5.fillRect(this.x,this.y,this.width,this.height);
+            ctx7.fillRect(this.x,this.y,this.width,this.height);
 
-            ctx5.fillStyle = "black";
-            ctx5.font = "30px Arial";        
+            ctx7.fillStyle = "black";
+            ctx7.font = "15px Arial";        
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci
-            ctx5.fillText(target.name,this.x+40,this.y+30); 
-            ctx5.fillText("HP : "+target.HP, this.x+40, this.y+60);      
-            ctx5.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
+            ctx7.fillText(target.name,cwidth7/2,this.y+20); 
+            ctx7.fillText("HP : "+target.HP, cwidth7/2, this.y+40);      
+            ctx7.fillText("Mvt : "+target.mvt,cwidth7-60,this.y+20);       
         },
         // Permets de supprimer la fenêtre 
         destroy : function(){
-            ctx5.clearRect(this.x,this.y,this.width,this.height);            
+            ctx7.clearRect(this.x,this.y,this.width,this.height);            
         }
     } 
     

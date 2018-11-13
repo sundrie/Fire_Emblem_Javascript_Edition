@@ -270,73 +270,31 @@ $(function(){
 
             // ctx3.fillStyle = "lightblue";
 
-            // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
-            // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile    
-            // for (i = 20; i <= maxMvt;i += tilesize) {
-                
-            //     // Dessine à droite
-            //     ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
-            //     // Dessine à gauche
-            //     ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
-            //     // Dessine en bas 
-            //     ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
-            //     // Dessine en haut
-            //     ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
-            // }
-            var c = 0;
-            // haut droit
-            // var k = 20;                    
-            // for(j = maxMvt; j >= 20;j -= tilesize){
-            //     k -= tilesize; 
-            //     // console.log(character.posx+j,character.posy);  
-                                        
-            //     // for(k = 20; k <= maxMvt;k += tilesize){
-            //     //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
-            //     //     c +=1;
-            //     //     console.log(character.posx+j-k,character.posy-k);
-                        
-            //     // }
-                    
-            //     ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-            //     // console.log(character.posx+j);
-                    
-            //     c +=1;
-            // }
-            // // bas droit
-            // k = -20;
-            // for(j = maxMvt; j >= 20;j -= tilesize){
-            //     k += tilesize; 
-            //     ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-            // }
-            // // bas gauche
-            // k = 20;     // l
-            // for(j = maxMvt; j >= 20;j -= tilesize){
-            //     k -= tilesize; 
-            //     ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
-            // }
-            // // haut gauche
-            // k = -20;
-            // for(j = maxMvt; j >= 20;j -= tilesize){
-            //     k += tilesize; 
-            //     ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-            // }    
-            var k = -20;
-            var l = 20;
-            for(j = maxMvt; j >= 20;j -= tilesize){
+            // Cette boucle va nous permettre de "dessiner" la portée de mouvement du personnage
+            var k = 0;
+            var l = 0;
+
+            for(j = maxMvt;j>=tilesize;j-=tilesize){
+                // bas_droit
+                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                console.log(character.posx+j,character.posy+k);
+                // haut gauche
+                ctx3.fillRect(character.posx-j,character.posy-k,tilesize,tilesize);
+                console.log(character.posx-j,character.posy-k);
+                // haut droit
+                ctx3.fillRect(character.posx+k,character.posy-j,tilesize,tilesize);
+                console.log(character.posx+k,character.posy-j);
+                // bas gauche
+                ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);
+                console.log(character.posx-k,character.posy+j);
                 // k est utilisé pour dessiner bas_droit et haut_gauche
                 k += tilesize; 
                 // l est utilisé pour dessiner haut_droit et bas_gauche
                 l -= tilesize;
-                // bas_droit
-                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                // haut gauche
-                ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-                // haut droit
-                ctx3.fillRect(character.posx+j,character.posy+l,tilesize,tilesize);
-                // bas gauche
-                ctx3.fillRect(character.posx+l,character.posy+j,tilesize,tilesize);
-
             }
+
+            // console.log(c);
+            
             
         }
         // Supprime le guide de mouvement

@@ -90,6 +90,19 @@ $(function(){
     $(".canvas6").css("top",topPos);
     $(".canvas6").css("left",leftPos);
 
+    // création du septième canvas 
+    $(".wrapper").append("<canvas id='canvas7' class='canvas7'></canvas>");
+    var canvas7 = $("#canvas7")[0];
+    // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
+    canvas7.setAttribute('width', cwidth/2);
+    canvas7.setAttribute('height', cheight/2);
+    var ctx7 = canvas7.getContext("2d");
+	var cwidth7 = $("#canvas7").width();
+    var cheight7 = $("#canvas7").height();
+    var canvassize7 = canvas7.getBoundingClientRect();
+    $(".canvas7").css("background-color","grey");
+
+
     // méthode pour suivre les déplacements de la souris
     function mouseTracking (mousetracker,target) {
         // Si la souris passe au dessus de la zone ciblée alors on renvoie true sinon si c'est en dehors alors false                  
@@ -203,9 +216,7 @@ $(function(){
         // Ceci va afficher les infos sur ce que le curseur survole
         this.displayInfo = function(){
             // Pour sauvegarder le this (Cursor)
-            var cursor = this;
-            // On appelle la méthode pour se détruire au début comme ça plus de fenêtre persistant après avoir quitté un personnage            
-            infoPerso.destroy();        
+            var cursor = this;     
             $.each(listAllCharacter, function(){
                 if (cursor.posx === this.posx && cursor.posy === this.posy){
                     // On appelle la méthode de cet objet pour lui indiquer qu'il doit s'afficher

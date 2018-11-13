@@ -264,8 +264,11 @@ $(function(){
             // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
             var maxMvt = tilesize*character.mvt;
             console.log(character);
+
+            // Permets de règler l'opacité des éléments 
+            ctx3.globalAlpha = 0.5;
             // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
-            // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile
+            // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile    
             for (i = 20; i <= maxMvt;i += tilesize) {
                 ctx3.fillStyle = "lightblue";
                 // Dessine à droite
@@ -350,7 +353,7 @@ $(function(){
 
     // Fonction permettant de centrer quelque chose par rapport à son conteneur
     // Retourne un array [0] pour x et [1] pour y
-    function centerThings(x,y,width,height,cwidth,cheight) {
+    function centerThings(width,height,cwidth,cheight) {
         var centeredx = (cwidth-width)/2;
         var centeredy = (cheight-height)/2;
         var returnedVal = [centeredx,centeredy];
@@ -369,7 +372,7 @@ $(function(){
             // Ajoute de la couleur au fond de notre menu
             ctx6.fillStyle = this.color;
             // Ceci va nous permettre de centrer notre contenu
-            var centerMe = centerThings(this.x,this.y,this.width,this.height,cwidth6,cheight6);
+            var centerMe = centerThings(this.width,this.height,cwidth6,cheight6);
             // On écrase les deux 0 avec nos nouvelles valeurs 
             this.x = centerMe[0];
             this.y = centerMe[1];
@@ -430,7 +433,8 @@ $(function(){
             ctx7.fillRect(this.x,this.y,this.width,this.height);
 
             ctx7.fillStyle = "black";
-            ctx7.font = "15px Arial";        
+            ctx7.font = "15px Arial";      
+            ctx7.textAlign="center";   
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci
             ctx7.fillText(target.name,cwidth7/2,this.y+20); 
             ctx7.fillText("HP : "+target.HP, cwidth7/2, this.y+40);      

@@ -100,6 +100,8 @@ $(function(){
     var cheight7 = $("#canvas7").height();
     var canvassize7 = canvas7.getBoundingClientRect();
     $(".canvas7").css("background-color","grey");
+    $(".canvas7").css("display","inline-block");
+    $(".canvas7").css("margin-bottom",cheight7/2+"px");
 
 
     // méthode pour suivre les déplacements de la souris

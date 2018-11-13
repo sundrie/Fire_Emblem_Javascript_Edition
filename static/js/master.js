@@ -330,20 +330,7 @@ $(function(){
                             character.posx = theCursor.posx;  
                             character.posy = theCursor.posy;    
                         }
-                    });
-                    // Si le joueur appuie sur la position où se trouve le sprite et bien on affiche l'image pour éviter sa disparition
-                    // if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
-                    //     ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-                    // } else {                    
-                    //     // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
-                    //     var previouslocation = [character.posx,character.posy];
-                    //     console.log("déplacement à cet endroit");
-                    //     ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
-                    //     ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
-                    //     // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
-                    //     character.posx = theCursor.posx;  
-                    //     character.posy = theCursor.posy;    
-                    // }                           
+                    });                         
                 }
             });
         }
@@ -432,7 +419,8 @@ $(function(){
 
             ctx5.fillStyle = "black";
             ctx5.font = "30px Arial";        
-            // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci 
+            // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci
+            ctx5.fillText(target.name,this.x+40,this.y+30); 
             ctx5.fillText("HP : "+target.HP, this.x+40, this.y+60);      
             ctx5.fillText("Mvt : "+target.mvt,this.x+40,this.y+90);       
         },

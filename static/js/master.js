@@ -267,56 +267,77 @@ $(function(){
 
             // Permets de règler l'opacité des éléments 
             ctx3.globalAlpha = 0.5;
+
+            // ctx3.fillStyle = "lightblue";
+
             // Cette boucle va nous permettre de "dessiner" laportée de mouvement du personnage
             // On initialise i à 20 pour éviter un carré sur le personnage puisque on ne bouge pas si on veut rester immobile    
-            for (i = 20; i <= maxMvt;i += tilesize) {
-                ctx3.fillStyle = "lightblue";
-                // Dessine à droite
-                ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
-                // Dessine à gauche
-                ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
-                // Dessine en bas 
-                ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
-                // Dessine en haut
-                ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
-            }
+            // for (i = 20; i <= maxMvt;i += tilesize) {
+                
+            //     // Dessine à droite
+            //     ctx3.fillRect(character.posx+i,character.posy,tilesize,tilesize);
+            //     // Dessine à gauche
+            //     ctx3.fillRect(character.posx-i,character.posy,tilesize,tilesize);          
+            //     // Dessine en bas 
+            //     ctx3.fillRect(character.posx,character.posy+i,tilesize,tilesize);   
+            //     // Dessine en haut
+            //     ctx3.fillRect(character.posx,character.posy-i,tilesize,tilesize);                                              
+            // }
             var c = 0;
             // haut droit
-            var k = 20;                    
-            for(j = maxMvt; j >= 20;j -= tilesize){
-                k -= tilesize; 
-                // console.log(character.posx+j,character.posy);  
+            // var k = 20;                    
+            // for(j = maxMvt; j >= 20;j -= tilesize){
+            //     k -= tilesize; 
+            //     // console.log(character.posx+j,character.posy);  
                                         
-                // for(k = 20; k <= maxMvt;k += tilesize){
-                //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
-                //     c +=1;
-                //     console.log(character.posx+j-k,character.posy-k);
+            //     // for(k = 20; k <= maxMvt;k += tilesize){
+            //     //     ctx.fillRect(character.posx+j-k,character.posy-k,tilesize,tilesize);
+            //     //     c +=1;
+            //     //     console.log(character.posx+j-k,character.posy-k);
                         
-                // }
+            //     // }
                     
-                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                // console.log(character.posx+j);
+            //     ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+            //     // console.log(character.posx+j);
                     
-                c +=1;
-            }
-            // bas droit
-            k = -20;
+            //     c +=1;
+            // }
+            // // bas droit
+            // k = -20;
+            // for(j = maxMvt; j >= 20;j -= tilesize){
+            //     k += tilesize; 
+            //     ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+            // }
+            // // bas gauche
+            // k = 20;     // l
+            // for(j = maxMvt; j >= 20;j -= tilesize){
+            //     k -= tilesize; 
+            //     ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
+            // }
+            // // haut gauche
+            // k = -20;
+            // for(j = maxMvt; j >= 20;j -= tilesize){
+            //     k += tilesize; 
+            //     ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
+            // }    
+            var k = -20;
+            var l = 20;
             for(j = maxMvt; j >= 20;j -= tilesize){
+                // k est utilisé pour dessiner bas_droit et haut_gauche
                 k += tilesize; 
+                // l est utilisé pour dessiner haut_droit et bas_gauche
+                l -= tilesize;
+                // bas_droit
                 ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-            }
-            // bas gauche
-            k = 20;
-            for(j = maxMvt; j >= 20;j -= tilesize){
-                k -= tilesize; 
-                ctx3.fillRect(character.posx+k,character.posy+j,tilesize,tilesize);
-            }
-            // haut gauche
-            k = -20;
-            for(j = maxMvt; j >= 20;j -= tilesize){
-                k += tilesize; 
+                // haut gauche
                 ctx3.fillRect(character.posx-k,character.posy-j,tilesize,tilesize);
-            }             
+                // haut droit
+                ctx3.fillRect(character.posx+j,character.posy+l,tilesize,tilesize);
+                // bas gauche
+                ctx3.fillRect(character.posx+l,character.posy+j,tilesize,tilesize);
+
+            }
+            
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
@@ -326,11 +347,24 @@ $(function(){
             $(document).keypress(function(e){
                 console.log(character.name,character.posx,character.posy);
                 
+                
                 // Si le joueur réappuie sur la touche E et bien on déplace le sprite
                 if(e.key === "e"){
+                    // var maxMvt = tilesize*character.mvt;
+                    // // mouvement max à droite
+                    // var maxMvtXR = character.posx+=maxMvt;
+                    // // mouvement max à gauche
+                    // var maxMvtXL = character.posx-=maxMvt;
+                    // // mouvement max en bas
+                    // var maxMvtYB = character.posy+=maxMvt;
+                    // // mouvement max en haut
+                    // var maxMvtYU = character.posy-=maxMvt;
+
+                    // console.log(maxMvtXR,maxMvtXL,maxMvtYB,maxMvtYU);
+                    
+
                     $.each(listAllCharacter, function(){   
                         console.log(character.name +" = "+this.name+" ? ");
-                        
                         if (theCursor.posx === this.posx && theCursor.posy === this.posy && character.name !== this.name){
                             console.log("Hey tu es sur " + this.name + " tu ne peut pas y aller");
                         } else if (theCursor.posx === character.posx && theCursor.posy === character.posy) {
@@ -503,7 +537,8 @@ $(function(){
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy) {
                         console.log("Unité " + this.name + " activée ! Paré à rouler !");                    
                         this.move(this);
-                    }                         
+                    }
+                                          
                 });       
             }             
             // Si le jeu n'est pas en pause donc on le mets en pause                  

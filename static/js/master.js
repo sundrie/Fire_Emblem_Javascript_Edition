@@ -15,13 +15,12 @@ $(function(){
 
     var mousetracker;   
 
-    // On récupère la position du 1er canvas pour déterminer où les autres doivent se placer pour faire des layers. offset() renvoie la position top et left de l'élément 
-    var topPos = $("#canvas").offset().top;
-    var leftPos = $("#canvas").offset().left;
-
-
+    // On récupère la position du 1er canvas pour déterminer où les autres doivent se placer pour faire des layers. 
+    var topPos = $("#canvas").position().top;
+    var leftPos = $("#canvas").position().left;
+    
     // création du second layer
-    $(".wrapper").append("<canvas id='canvas2' class='canvas2'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas2' class='canvas2'></canvas>");
     var canvas2 = $("#canvas2")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas2.setAttribute('width', cwidth);
@@ -35,7 +34,7 @@ $(function(){
     $(".canvas2").css("left",leftPos);
     
     // création du troisième layer
-    $(".wrapper").append("<canvas id='canvas3' class='canvas3'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas3' class='canvas3'></canvas>");
     var canvas3 = $("#canvas3")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas3.setAttribute('width', cwidth);
@@ -49,7 +48,7 @@ $(function(){
     $(".canvas3").css("left",leftPos);
 
     // création du quatrième layer
-    $(".wrapper").append("<canvas id='canvas4' class='canvas4'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas4' class='canvas4'></canvas>");
     var canvas4 = $("#canvas4")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas4.setAttribute('width', cwidth);
@@ -63,7 +62,7 @@ $(function(){
     $(".canvas4").css("left",leftPos);
 
     // création du cinquième layer
-    $(".wrapper").append("<canvas id='canvas5' class='canvas5'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas5' class='canvas5'></canvas>");
     var canvas5 = $("#canvas5")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas5.setAttribute('width', cwidth);
@@ -77,7 +76,7 @@ $(function(){
     $(".canvas5").css("left",leftPos);
 
     // création du sixième layer
-    $(".wrapper").append("<canvas id='canvas6' class='canvas6'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas6' class='canvas6'></canvas>");
     var canvas6 = $("#canvas6")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas6.setAttribute('width', cwidth);
@@ -91,7 +90,7 @@ $(function(){
     $(".canvas6").css("left",leftPos);
 
     // création du septième canvas 
-    $(".wrapper").append("<canvas id='canvas7' class='canvas7'></canvas>");
+    $(".gamecontainer").append("<canvas id='canvas7' class='canvas7'></canvas>");
     var canvas7 = $("#canvas7")[0];
     // On mets les valeurs du premier canvas pour éviter de tout changer à chaque fois
     canvas7.setAttribute('width', cwidth/2);
@@ -423,8 +422,6 @@ $(function(){
         color : "grey",
         // méthode pour créer le menu
         create : function(target) {
-            console.log(this);
-                        
             // Ajoute de la couleur au fond de notre menu
             ctx7.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir

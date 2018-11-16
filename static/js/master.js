@@ -264,38 +264,24 @@ $(function(){
             // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
             var maxMvt = tilesize*character.mvt;
             console.log(character);
-
             // Permets de règler l'opacité des éléments 
-            ctx3.globalAlpha = 0.5;
-
-            // ctx3.fillStyle = "lightblue";
-
+            ctx3.globalAlpha = 0.3;
+            ctx3.fillStyle = "blue";
             // Cette boucle va nous permettre de "dessiner" la portée de mouvement du personnage
             var k = 0;
-            var l = 0;
-
+        
             for(j = maxMvt;j>=tilesize;j-=tilesize){
                 // bas_droit
                 ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                console.log(character.posx+j,character.posy+k);
                 // haut gauche
                 ctx3.fillRect(character.posx-j,character.posy-k,tilesize,tilesize);
-                console.log(character.posx-j,character.posy-k);
                 // haut droit
                 ctx3.fillRect(character.posx+k,character.posy-j,tilesize,tilesize);
-                console.log(character.posx+k,character.posy-j);
                 // bas gauche
                 ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);
-                console.log(character.posx-k,character.posy+j);
-                // k est utilisé pour dessiner bas_droit et haut_gauche
                 k += tilesize; 
-                // l est utilisé pour dessiner haut_droit et bas_gauche
-                l -= tilesize;
             }
-
             // console.log(c);
-            
-            
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){

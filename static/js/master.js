@@ -501,13 +501,23 @@ $(function(){
         // Notre grille logique qui est utile dans les jeux pour déterminer les collisions, etc. 
         // Il y a actuellement 1008 tiles (840*20)+(480*20)
         var logicGrid = [];
-        for (j = cheight; j >= tilesize; j-=tilesize){
-            for (i = cwidth; i >= tilesize; i-=tilesize) {
-                logicGrid.push(0);
-                ctx4.fillText("0",i,j)            
+        // i est x
+        // j est y
+        for (j = cheight; j >= 0; j-=tilesize){
+            for (i = cwidth; i >= 0; i-=tilesize){
+                logicGrid.push({x:i,y:j,id:0});
+                //ctx4.fillText("0",i,j)  
+                ctx.fillStyle="lightgrey";  
+                ctx.fillRect(i,j,tilesize,tilesize);      
             }
         }
-        console.log(logicGrid);
-        
+        console.log(logicGrid);    
+        // Pour chercher dans le tableau
+        $(logicGrid).filter(function(){            
+            if (this.x === 480 && this.y === 100) {                
+                console.log("trouvé "+this.x +" - "+ this.y);                
+            }            
+        });
+            
     }
 });

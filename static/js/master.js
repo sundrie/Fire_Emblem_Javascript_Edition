@@ -283,7 +283,7 @@ $(function(){
                 }
                 // Ceci est déplacé ici sinon notre code ne fonctionnerait pas comme voulu 
                 k += tilesize;
-            }
+            }            
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
@@ -293,8 +293,7 @@ $(function(){
             $(document).keypress(function(e){
                 // Permets d'afficher le guide de mvt pour montrer les possibilités de mouvement dès que le personnage a été sélectionné
                 character.showMvtPath();
-                console.log(character.name,character.posx,character.posy);   
-                
+                console.log(character.name,character.posx,character.posy);                   
                 // Si le joueur réappuie sur la touche E et bien on déplace le sprite
                 if(e.key === "e"){                    
                     $.each(listAllCharacter, function(){   
@@ -498,5 +497,17 @@ $(function(){
 
         var tharja = new Character("Tharja",100,160,5,35);
         tharja.create();
+
+        // Notre grille logique qui est utile dans les jeux pour déterminer les collisions, etc. 
+        // Il y a actuellement 1008 tiles (840*20)+(480*20)
+        var logicGrid = [];
+        for (j = cheight; j >= tilesize; j-=tilesize){
+            for (i = cwidth; i >= tilesize; i-=tilesize) {
+                logicGrid.push(0);
+                ctx4.fillText("0",i,j)            
+            }
+        }
+        console.log(logicGrid);
+        
     }
 });

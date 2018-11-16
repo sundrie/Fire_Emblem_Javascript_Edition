@@ -284,10 +284,31 @@ $(function(){
                 // Ceci est déplacé ici sinon notre code ne fonctionnerait pas comme voulu 
                 k += tilesize;
             }            
+            character.showMaxAttRange();
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
+        }
+        // Comme dans le jeu va afficher la portée max des attaques (dans le jeu ça entoure là où s'arrête le mouvement) en rouge 
+        this.showMaxAttRange=function(){
+            var character = this;
+            var maxMvt = tilesize*character.mvt;
+            var k=0;
+            ctx3.globalAlpha = 0.3;
+            ctx3.fillStyle = "red";
+            for(j = maxMvt+tilesize;j>=tilesize;j-=tilesize){
+                // bas_droit
+                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                // haut gauche
+                ctx3.fillRect(character.posx-j,character.posy-k,tilesize,tilesize);
+                // haut droit
+                ctx3.fillRect(character.posx+k,character.posy-j,tilesize,tilesize);
+                // bas gauche
+                ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);    
+                k += tilesize;                           
+            }
+
         }
         this.move = function(character){  
             $(document).keypress(function(e){
@@ -368,8 +389,6 @@ $(function(){
                     tileData = this;
                 }
             });
-
-            console.log(tileData);
             
             // Ajoute de la couleur au fond de notre menu
             ctx5.fillStyle = this.color;

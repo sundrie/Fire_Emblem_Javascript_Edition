@@ -281,7 +281,6 @@ $(function(){
                 ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);
                 k += tilesize; 
             }
-            // console.log(c);
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
@@ -289,6 +288,8 @@ $(function(){
         }
         this.move = function(character){
             $(document).keypress(function(e){
+                // Permets d'afficher le guide de mvt pour montrer les possibilités de mouvement dès que le personnage a été sélectionné
+                character.showMvtPath();
                 console.log(character.name,character.posx,character.posy);
                 
                 
@@ -322,6 +323,7 @@ $(function(){
                             // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
                             character.posx = theCursor.posx;  
                             character.posy = theCursor.posy;    
+                            character.destroyMvtPath();
                         }
                     });                         
                 }

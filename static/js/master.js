@@ -235,7 +235,6 @@ $(function(){
     var listAllCharacter = {};
     // Cette variable va stocker tous les sprites sur la grilles des personnages
     var spriteChara = {};
-    
 
     function Character(name,posx,posy,mvt,HP){
         // posx et posy permettes de déterminer où se trouve le personnage
@@ -263,51 +262,41 @@ $(function(){
             var character = this; 
             // cette variable va nous permettre de convertir notre valeur de mvt en portée max en prenant en compte la taille de case
             var maxMvt = tilesize*character.mvt;
-            console.log(character);
             // Permets de règler l'opacité des éléments 
             ctx3.globalAlpha = 0.3;
             ctx3.fillStyle = "blue";
             // Cette boucle va nous permettre de "dessiner" la portée de mouvement du personnage
             var k = 0;
-        
-            for(j = maxMvt;j>=tilesize;j-=tilesize){
-                // bas_droit
-                ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
-                // haut gauche
-                ctx3.fillRect(character.posx-j,character.posy-k,tilesize,tilesize);
-                // haut droit
-                ctx3.fillRect(character.posx+k,character.posy-j,tilesize,tilesize);
-                // bas gauche
-                ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);
-                k += tilesize; 
+            // On effectue i fois le nombre de mouvement autorisé par le personnage (5,7 fois)
+            for(i = character.mvt;i>0 ;i--){
+                // Ceci est important on enlève i donc 1 a maxMvt pour que le guide dessine toutes les cases jusqu'a là où se trouve le personnage
+                maxMvt = i*tilesize;                
+                for(j = maxMvt;j>=tilesize;j-=tilesize){
+                    // bas_droit
+                    ctx3.fillRect(character.posx+j,character.posy+k,tilesize,tilesize);
+                    // haut gauche
+                    ctx3.fillRect(character.posx-j,character.posy-k,tilesize,tilesize);
+                    // haut droit
+                    ctx3.fillRect(character.posx+k,character.posy-j,tilesize,tilesize);
+                    // bas gauche
+                    ctx3.fillRect(character.posx-k,character.posy+j,tilesize,tilesize);                               
+                }
+                // Ceci est déplacé ici sinon notre code ne fonctionnerait pas comme voulu 
+                k += tilesize;
             }
         }
         // Supprime le guide de mouvement
         this.destroyMvtPath= function(){
             ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
         }
-        this.move = function(character){
+        this.move = function(character){  
             $(document).keypress(function(e){
                 // Permets d'afficher le guide de mvt pour montrer les possibilités de mouvement dès que le personnage a été sélectionné
                 character.showMvtPath();
-                console.log(character.name,character.posx,character.posy);
-                
+                console.log(character.name,character.posx,character.posy);   
                 
                 // Si le joueur réappuie sur la touche E et bien on déplace le sprite
-                if(e.key === "e"){
-                    // var maxMvt = tilesize*character.mvt;
-                    // // mouvement max à droite
-                    // var maxMvtXR = character.posx+=maxMvt;
-                    // // mouvement max à gauche
-                    // var maxMvtXL = character.posx-=maxMvt;
-                    // // mouvement max en bas
-                    // var maxMvtYB = character.posy+=maxMvt;
-                    // // mouvement max en haut
-                    // var maxMvtYU = character.posy-=maxMvt;
-
-                    // console.log(maxMvtXR,maxMvtXL,maxMvtYB,maxMvtYU);
-                    
-
+                if(e.key === "e"){                    
                     $.each(listAllCharacter, function(){   
                         console.log(character.name +" = "+this.name+" ? ");
                         if (theCursor.posx === this.posx && theCursor.posy === this.posy && character.name !== this.name){
@@ -327,7 +316,7 @@ $(function(){
                         }
                     });                         
                 }
-            });
+            });   
         }
     }
 
@@ -481,10 +470,9 @@ $(function(){
             if(e.key === "e"){
                 $.each(listAllCharacter, function(){
                     if (theCursor.posx === this.posx && theCursor.posy === this.posy) {
-                        console.log("Unité " + this.name + " activée ! Paré à rouler !");                    
-                        this.move(this);
+                        console.log("Unité " + this.name + " activée ! Paré à rouler !");     
+                        this.move(this);                        
                     }
-                                          
                 });       
             }             
             // Si le jeu n'est pas en pause donc on le mets en pause                  

@@ -227,7 +227,7 @@ $(function(){
                     this.destroyMvtPath();
                 }            
             });             
-            infoMap.create("Plaine");  
+            infoMap.create();  
         }        
     }
 
@@ -360,26 +360,38 @@ $(function(){
         height : 60, 
         color : "grey",
         // méthode pour créer le menu
-        create : function(typeTerrain) {       
+        create : function() {      
+             
+            var tileData;
+            $(logicGrid).filter(function(){
+                if (this.x === theCursor.posx && this.y === theCursor.posy) { 
+                    tileData = this;
+                }
+            });
+
+            console.log(tileData);
+            
             // Ajoute de la couleur au fond de notre menu
             ctx5.fillStyle = this.color;
             // Dessine un rectangle remplit / strokeRect() au contraire ne dessine que ses bords sans le remplir
             ctx5.fillRect(this.x,this.y,this.width,this.height);      
             var dataTerrain = {}; 
-            switch (typeTerrain) {
-                case "Plaine":
+            switch (tileData.id) {
+                case 0:
+                    dataTerrain ["nom"] = "Plaine";
                     dataTerrain ["def"] = 0;
                     dataTerrain ["esq"] = 0;
                     break;
-                case "Forêt":
-                    dataTerrain ["def"] = 1;
-                    dataTerrain ["esq"] = 10;
+                case 1:
+                    dataTerrain ["nom"] = "Void";
+                    dataTerrain ["def"] = -1;
+                    dataTerrain ["esq"] = -10;
                     break;
             }
             ctx5.fillStyle = "white";
             ctx5.font = "15px Arial";  
             // Le nom du terrain
-            ctx5.fillText(typeTerrain,this.x+10,this.y+20);
+            ctx5.fillText(dataTerrain.nom,this.x+10,this.y+20);
             // Les caractéristiques du terrain
             ctx5.font = "10px Arial";
             ctx5.fillText("Def : "+dataTerrain.def+ " - Esq : "+dataTerrain.esq ,this.x+10,this.y+40);           
@@ -443,6 +455,11 @@ $(function(){
     });
 
     var theCursor;
+
+    // Notre grille logique qui est utile dans les jeux pour déterminer les collisions, etc. 
+    // Il y a actuellement 1008 tiles (840*20)+(480*20)
+    var logicGrid = [];
+
     // L'affichage du jeu
     function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -498,26 +515,30 @@ $(function(){
         var tharja = new Character("Tharja",100,160,5,35);
         tharja.create();
 
-        // Notre grille logique qui est utile dans les jeux pour déterminer les collisions, etc. 
-        // Il y a actuellement 1008 tiles (840*20)+(480*20)
-        var logicGrid = [];
+        
         // i est x
         // j est y
         for (j = cheight; j >= 0; j-=tilesize){
             for (i = cwidth; i >= 0; i-=tilesize){
                 logicGrid.push({x:i,y:j,id:0});
                 //ctx4.fillText("0",i,j)  
-                ctx.fillStyle="lightgrey";  
-                ctx.fillRect(i,j,tilesize,tilesize);      
+                ctx.fillStyle="#024509";  
+                ctx.fillRect(i,j,tilesize,tilesize);                
             }
         }
-        console.log(logicGrid);    
+        console.log(logicGrid);
+        
         // Pour chercher dans le tableau
         $(logicGrid).filter(function(){            
-            if (this.x === 480 && this.y === 100) {                
-                console.log("trouvé "+this.x +" - "+ this.y);                
+            if (this.x === 480 && this.y === 100) {          
+                // Sert d'exemple      
+                console.log("trouvé "+this.x +" - "+ this.y);      
+                ctx.fillStyle="grey";
+                ctx.fillRect(this.x,this.y,tilesize,tilesize);
+                this.id = 1;                       
             }            
         });
             
     }
+    
 });

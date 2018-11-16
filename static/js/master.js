@@ -236,13 +236,15 @@ $(function(){
     // Cette variable va stocker tous les sprites sur la grilles des personnages
     var spriteChara = {};
 
-    function Character(name,posx,posy,mvt,HP){
+    function Character(name,posx,posy,mvt,HP,force,defense){
         // posx et posy permettes de déterminer où se trouve le personnage
         this.name = name;
         this.posx = posx;
         this.posy = posy;
         this.mvt = mvt;
         this.HP = HP;
+        this.force = force;
+        this.defense = defense;
 
         // On fixe le personnage aux coordonnées indiquées lors de sa création
         this.create = function() { 
@@ -524,14 +526,14 @@ $(function(){
         });
           
 
-        var chrom = new Character("Chrom",420,460,5,50);
+        var chrom = new Character("Chrom",420,460,5,50,15,12);
         // Ceci va créer notre personnage (définir sa place dans la grille)
         chrom.create();
 
-        var cordelia = new Character("Cordelia",200,200,7,40);
+        var cordelia = new Character("Cordelia",200,200,7,40,10,10);
         cordelia.create();      
 
-        var tharja = new Character("Tharja",100,160,5,35);
+        var tharja = new Character("Tharja",100,160,5,35,5,10);
         tharja.create();
 
         

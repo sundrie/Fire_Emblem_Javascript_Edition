@@ -329,10 +329,12 @@ $(function(){
                             // On garde en mémoire la précédente localisation du sprite pour pouvoir le supprimer une fois le déplacement fait
                             var previouslocation = [character.posx,character.posy];
                             console.log("déplacement à cet endroit");
-                            logicGridGestion.updateCharaPos(previouslocation,character);
 
                             ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
                             ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
+
+                            // on appelle la méthode pour mettre à jour la position dans la logic grid;
+                            logicGridGestion.updateCharaPos(previouslocation,character);
                             // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
                             character.posx = theCursor.posx;  
                             character.posy = theCursor.posy;    
@@ -517,7 +519,12 @@ $(function(){
         // Cette méthode va mettre a jour la position des unités ayant bougé
         updateCharaPos : function(oldPos,unit){
             console.log("ancienne position "+oldPos);
-            console.log(unit);            
+            console.log(unit); 
+            // On supprime la précédente position du personnage        
+            ctx.clearRect(oldPos[0],oldPos[1],tilesize,tilesize); 
+            // Et on le mets à la nouvelle position
+            ctx.fillStyle="purple";
+            ctx.fillRect(unit.posx,unit.posy,tilesize,tilesize);            
         }
 
     }

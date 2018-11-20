@@ -439,7 +439,10 @@ $(function(){
             // En faisant ainsi c'est à dire à utiliser les valeurs de bases du rectangle la position du texte sera toujours dans celui ci
             ctx7.fillText(target.name,cwidth7/2,this.y+20); 
             ctx7.fillText("HP : "+target.HP, cwidth7/2, this.y+40);      
-            ctx7.fillText("Mvt : "+target.mvt,cwidth7-60,this.y+20);       
+            ctx7.fillText("Mvt : "+target.mvt,cwidth7-60,this.y+20);   
+            
+            ctx7.fillText("Force : "+target.force,this.x+40,this.y+80); 
+            ctx7.fillText("Defense : "+target.force,this.x+48,this.y+100);
         },
         // Permets de supprimer la fenêtre 
         destroy : function(){

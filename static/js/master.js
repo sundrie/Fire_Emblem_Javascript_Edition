@@ -332,7 +332,6 @@ $(function(){
 
                             ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
                             ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
-
                             
                             // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
                             character.posx = theCursor.posx;  
@@ -494,8 +493,13 @@ $(function(){
         create : function(){
             for (j = cheight; j >= 0; j-=tilesize){
                 for (i = cwidth; i >= 0; i-=tilesize){
-                    logicGrid.push({x:i,y:j,id:0});
-                    //ctx4.fillText("0",i,j)  
+                    logicGrid.push({
+                        x:i,
+                        y:j,
+                        id:0,   // l'id correspond au type du terrain
+                        occupied:false,     // Ceci va nous permettre de dire si quelqu'un est sur cette case de base on initialise à faux
+                    });
+                    //ctx4.fillText("0",i,j);  
                     ctx.fillStyle="#024509";  
                     ctx.fillRect(i,j,tilesize,tilesize);                
                 }
@@ -512,6 +516,9 @@ $(function(){
                         console.log("trouvé "+chara.name +" - "+ chara.posx,chara.posy);      
                         ctx.fillStyle="purple";
                         ctx.fillRect(this.x,this.y,tilesize,tilesize);
+                        // On passe le occupied à vrai puisqu'une unité y est présente
+                        this.occupied=true;
+                        
                         // this.id = 1;                       
                     }            
                 });
@@ -596,7 +603,7 @@ $(function(){
         
         logicGridGestion.manageCharaPos();
 
-        // console.log(logicGrid);
+        console.log(logicGrid);
 
         // Pour chercher dans le tableau
         // Sert juste d'exemple

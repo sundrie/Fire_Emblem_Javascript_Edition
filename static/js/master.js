@@ -484,6 +484,20 @@ $(function(){
     // Il y a actuellement 1008 tiles (840*20)+(480*20)
     var logicGrid = [];
 
+    var logicGridGestion = {
+        grid : logicGrid,
+        create : function(){
+            for (j = cheight; j >= 0; j-=tilesize){
+                for (i = cwidth; i >= 0; i-=tilesize){
+                    logicGrid.push({x:i,y:j,id:0});
+                    //ctx4.fillText("0",i,j)  
+                    ctx.fillStyle="#024509";  
+                    ctx.fillRect(i,j,tilesize,tilesize);                
+                }
+            }
+        }
+    }
+
     // L'affichage du jeu
     function gameScreen() {        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -538,18 +552,12 @@ $(function(){
 
         var tharja = new Character("Tharja",100,160,5,35,5,10);
         tharja.create();
-
-        
+         
         // i est x
         // j est y
-        for (j = cheight; j >= 0; j-=tilesize){
-            for (i = cwidth; i >= 0; i-=tilesize){
-                logicGrid.push({x:i,y:j,id:0});
-                //ctx4.fillText("0",i,j)  
-                ctx.fillStyle="#024509";  
-                ctx.fillRect(i,j,tilesize,tilesize);                
-            }
-        }
+        
+        logicGridGestion.create();
+
         console.log(logicGrid);
         
         // Pour chercher dans le tableau

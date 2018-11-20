@@ -333,12 +333,13 @@ $(function(){
                             ctx2.drawImage(spriteChara[character.name],theCursor.posx,theCursor.posy);
                             ctx2.clearRect(previouslocation[0],previouslocation[1],tilesize,tilesize); 
 
-                            // on appelle la méthode pour mettre à jour la position dans la logic grid;
-                            logicGridGestion.updateCharaPos(previouslocation,character);
+                            
                             // On écrase les précédentes valeurs avec la position du curseur car maintenant le personnage est là où se trouve le curseur
                             character.posx = theCursor.posx;  
                             character.posy = theCursor.posy;    
                             character.destroyMvtPath();
+                            // on appelle la méthode pour mettre à jour la position dans la logic grid;
+                            logicGridGestion.updateCharaPos(previouslocation,character);
                         }
                     });                         
                 }
@@ -520,8 +521,11 @@ $(function(){
         updateCharaPos : function(oldPos,unit){
             console.log("ancienne position "+oldPos);
             console.log(unit); 
-            // On supprime la précédente position du personnage        
-            ctx.clearRect(oldPos[0],oldPos[1],tilesize,tilesize); 
+            
+            // On supprime la précédente position du personnage  
+            // Pour les tests c'est du purple dégueu      
+            ctx.fillStyle="#024509";
+            ctx.fillRect(oldPos[0],oldPos[1],tilesize,tilesize); 
             // Et on le mets à la nouvelle position
             ctx.fillStyle="purple";
             ctx.fillRect(unit.posx,unit.posy,tilesize,tilesize);            

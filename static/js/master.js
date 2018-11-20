@@ -499,8 +499,17 @@ $(function(){
         // Cette fonction va figer la position des différents personnages sur la grid
         manageCharaPos : function(){
             $.each(listAllCharacter, function(){
-                console.log(this);
-                
+                // console.log(this);
+                // Pour sauvegarder le this
+                var chara = this;
+                $(logicGrid).filter(function(){  
+                    if (this.x === chara.posx && this.y === chara.posy) {   
+                        console.log("trouvé "+chara.name +" - "+ chara.posx,chara.posy);      
+                        ctx.fillStyle="purple";
+                        ctx.fillRect(this.x,this.y,tilesize,tilesize);
+                        // this.id = 1;                       
+                    }            
+                });
             });
         }
     }

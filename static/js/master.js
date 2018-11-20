@@ -495,6 +495,13 @@ $(function(){
                     ctx.fillRect(i,j,tilesize,tilesize);                
                 }
             }
+        },
+        // Cette fonction va figer la position des différents personnages sur la grid
+        manageCharaPos : function(){
+            $.each(listAllCharacter, function(){
+                console.log(this);
+                
+            });
         }
     }
 
@@ -556,11 +563,15 @@ $(function(){
         // i est x
         // j est y
         
+        // On créé la grille logique 
         logicGridGestion.create();
-
-        console.log(logicGrid);
         
+        logicGridGestion.manageCharaPos();
+
+        // console.log(logicGrid);
+
         // Pour chercher dans le tableau
+        // Sert juste d'exemple
         $(logicGrid).filter(function(){            
             if (this.x === 480 && this.y === 100) {          
                 // Sert d'exemple      
